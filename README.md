@@ -2,7 +2,7 @@
 
 login module - James
 
-user management module - Leah
+sensor and user management module - Leah
 
 subscribe module - Megan
 
