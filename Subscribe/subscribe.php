@@ -1,3 +1,9 @@
+<!--This module will be used by scientists to subscribe to and unsubscribe from sensor data. 
+It allows a user to list all sensors, their types, their locations, and their descriptions. 
+The user is also able see which sensor he or she is currently subscribed to, 
+and is able to add or remove subscriptions to sensors.
+-->
+
 <html>
 	<body>
 		<?php
