@@ -8,10 +8,16 @@
 
        //establish connection
        $conn = connect();
-
+       
        // Delete the sensor
        if($_POST["RemoveSensor"]){
-          echo('Hey');
+          $sensor_ID = $_POST['RSensorID'];
+          //check in DB
+       
+          // Remove from DB
+          $sqlDEL = "DELETE FROM sensors WHERE sensor_id
+          ={$sensor_ID};";
+          echo $sqlDEL;
        }
        //Add the sensor
        if($_POST["AddSensor"]){
