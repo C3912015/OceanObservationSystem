@@ -3,49 +3,65 @@ It allows a user to list all sensors, their types, their locations, and their de
 The user is also able see which sensor he or she is currently subscribed to, 
 and is able to add or remove subscriptions to sensors.
 -->
-
 <html>
 	<body>
+
+        <h1>Subscription Module</h1>
 		<?php
+			//Form information taken from http://www.w3schools.com/html/html_forms.asp
 			//Shows all the sensor data
-			include("PHPconnectionDB.php");
+			include("/compsci/webdocs/msumner/web_docs/PHPconnectionDB.php");
 			//establish connection
 			$conn = connect();
-			
-			//sql add values into sensors
-			$sql1 = 'INSERT INTO sensors VALUES (122)'; 
 
 			//sql collect all values from sensors
-			$sql2 = 'SELECT * FROM sensors';
+			$sql = 'SELECT * FROM sensors';
 
 			//Prepare sql using conn and returns the statement identifier
-			$stid1 = oci_parse($conn, $sql1);
-			$stid2 = oci_parse($conn, $sql2);
+			$stid = oci_parse($conn, $sql);
 
 			//Execute a statement returned from oci_parse()
-			$res1 = oci_execute($stid1);
-			$res2 = oci_execute($stid2);
+			$res = oci_execute($stid);
+
 			//if error, retrieve the error using the oci_error() function & output an error
-			if (!$res1) {
-				$err = oci_error($stid1);
+			if (!$res) {
+				$err = oci_error($stid);
 				echo htmlentities($err['message']);
 			} else { echo 'Rows Extracted <br/>'; }
 
+			if(isset($_POST['sensor']) && $_POST['sensor'] == 'Subscribed')	
+			{
+				echo $_Post['sensor'];
+			}
+			else
+			{
+				echo "Not Subscribed";
+			}
 
 			//Display results
-		   while ($row = oci_fetch_array($stid2, OCI_ASSOC)) {
-		   	
-			foreach ($row as $item) {
-				echo $item.'&nbsp;';
-			}
-			echo '<br/>';
-		   }
+			echo "<table>";
+		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+		   		echo "<tr><td>" . $row['name'] . "</td><td>" . $row['age'] . "</td></tr>";
+				foreach ($row as $item) {
+					echo $item.'&nbsp;';
+				}
+			echo '</table>';
+		    }
 
 			// Free the statement identifier when closing the connection
-			oci_free_statement($stid1);
-			oci_free_statement($stid2);
+			oci_free_statement($stid);
 			oci_close($conn);
 		?>
+			<!--Add a Subscription-->
+			<h2>Add a Subscription</h2>
+         		<form name="Subscriptions" method="post" action="subscribe.php">
+				Sensor name: 
+           		<input type="text" name = "addSensor">
+				</br></br>
+				<input type = "submit" value="Submit">
+         		</form>
+
+			<!--Remove a Subscription-->
 	</body>
 </html>		
 
