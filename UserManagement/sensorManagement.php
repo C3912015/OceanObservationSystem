@@ -17,7 +17,8 @@
           // Remove from DB
           $sqlDEL = "DELETE FROM sensors WHERE sensor_id
           ={$sensor_ID};";
-          echo $sqlDEL;
+          //$stid = oci_parse($conn, $sql);
+          //$res = oci_execute($stid);
        }
        //Add the sensor
        if($_POST["AddSensor"]){
