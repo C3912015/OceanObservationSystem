@@ -4,21 +4,23 @@
   <body>
     <?php
        //connection function
-       include("PHPconnectionDB.php")
+       include("../../PHPconnectionDB.php");
 
        //establish connection
-       $conn = connect()
+       $conn = connect();
 
-       //get button info
-
-       //if delete, remove sensor
+       // Delete the sensor
        if($_POST["RemoveSensor"]){
-       
+          echo('Hey');
        }
-       //if add, addsensor
+       //Add the sensor
        if($_POST["AddSensor"]){
-
+          echo('yo');
        }
+       echo
+       '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagement.html">Go
+       Back</a>';
+       oci_close($conn);
     ?>
   </body>
 </html>
