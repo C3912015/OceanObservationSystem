@@ -9,13 +9,16 @@
        //establish connection
        $conn = connect()
 
-       //get sensor_id
-
        //get button info
 
        //if delete, remove sensor
+       if($_POST["RemoveSensor"]){
+       
+       }
+       //if add, addsensor
+       if($_POST["AddSensor"]){
 
-       //if add, new form for info, go to another page
+       }
     ?>
   </body>
 </html>
