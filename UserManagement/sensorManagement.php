@@ -14,9 +14,11 @@
           $sensor_ID = $_POST['RSensorID'];
           //check in DB
        
-          // Remove from DB
+          
+          // Removee from DB
           $sqlDEL = "DELETE FROM sensors WHERE sensor_id
           ={$sensor_ID};";
+          echo $sqlDEL;
           //$stid = oci_parse($conn, $sql);
           //$res = oci_execute($stid);
        }
