@@ -15,7 +15,7 @@ and is able to add or remove subscriptions to sensors.
 			$conn = connect();
 
 			//sql collect all values from sensors
-			$sql = 'SELECT * FROM sensors';
+			$sql = 'SELECT * FROM subscriptions';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -58,9 +58,9 @@ and is able to add or remove subscriptions to sensors.
 			
 			//establish connection
 			$conn = connect();
-
+			$addSensor = $_POST['addSensor'];
 			//sql collect all values from sensors
-			$sql = 'INSERT INTO subscriptions Table(addSensor,1)';
+			$sql = 'INSERT INTO subscriptions Values($addSensor,1)';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -91,7 +91,7 @@ and is able to add or remove subscriptions to sensors.
 			$conn = connect();
 
 			//sql collect all values from sensors
-			$sql = 'INSERT INTO subscriptions Table(addSensor,1)';
+			$sql = 'INSERT INTO subscriptions Values(addSensor,1)';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
