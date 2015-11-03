@@ -12,7 +12,7 @@
        
        // Delete the sensor
        if($_POST["RemoveSensor"]){
-          $sensor_ID = $_POST['RSensorID'];
+          $sensor_ID = trim($_POST['RSensorID']);
           $count = 0;
 
           //check if sensor exists in DB
