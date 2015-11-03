@@ -12,8 +12,14 @@ Add/Update/Remove User
 <html>
   <body>
     <?php
+       //connection function
+       include("../../PHPconnectionDB.php");
+
        // if user is admin
-       $conn = connect()
+       //establish connection
+       $conn = connect();
+
+       echo 'existsssss';
        
     ?>
   </body>
