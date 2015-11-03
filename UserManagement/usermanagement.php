@@ -12,7 +12,9 @@ Add/Update/Remove User
 <html>
   <body>
     <?php
-      $conn = connect()
+       // if user is admin
+       $conn = connect()
+       
     ?>
   </body>
 </html>
