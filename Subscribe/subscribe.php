@@ -7,15 +7,16 @@ and is able to add or remove subscriptions to sensors.
 	<body>
 
         <h1>Subscription Module</h1>
+		<h2>List of Sensors:</h2>
 		<?php
 			/*Shows all the sensor data*/
-			//Form information taken from http://www.w3schools.com/html/html_forms.asp
+			//Form information implemented from http://www.w3schools.com/html/html_forms.asp
 			include("/compsci/webdocs/msumner/web_docs/PHPconnectionDB.php");
 			//establish connection
 			$conn = connect();
 
 			//sql collect all values from sensors
-			$sql = 'SELECT * FROM subscriptions';
+			$sql = 'SELECT * FROM sensors s,subscriptions sc where s.sensor_id = sc.sensor_id';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -27,16 +28,22 @@ and is able to add or remove subscriptions to sensors.
 			if (!$res) {
 				$err = oci_error($stid);
 				echo htmlentities($err['message']);
-			} else { echo 'Rows Extracted <br/>'; }
+			}
 
 			//Display results
+			$count = 0;
 			echo "<table>";
 		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
-		   		echo "<tr><td>" . $row['name'] . "</td><td>" . $row['age'] . "</td></tr>";
 				foreach ($row as $item) {
 					echo $item.'&nbsp;';
 				}
-			echo '</table>';
+				if ($count == 0) {
+					echo '</table>';
+				}
+				else {
+					echo '</table><br/>';
+					}
+				$count += 1;
 		    }
 
 			// Free the statement identifier when closing the connection
@@ -47,10 +54,10 @@ and is able to add or remove subscriptions to sensors.
 			<!--Add a Subscription-->
 			<h2>Add a Subscription</h2>
          		<form name="Subscriptions" method="post" action="subscribe.php">
-				Sensor name: 
+				Sensor ID: 
            		<input type="text" name = "addSensor">
 				</br></br>
-				<input type = "submit" value="Submit">
+				<input type = "submit" value="Add Subscription">
          		</form>
 				
 		<?php
@@ -60,7 +67,7 @@ and is able to add or remove subscriptions to sensors.
 			$conn = connect();
 			$addSensor = $_POST['addSensor'];
 			//sql collect all values from sensors
-			$sql = 'INSERT INTO subscriptions Values($addSensor,1)';
+			$sql = 'INSERT INTO subscriptions Values({$addSensor},1)';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -78,10 +85,10 @@ and is able to add or remove subscriptions to sensors.
 			<!--Remove a Subscription-->
 			<h2>Remove a Subscription</h2>
          		<form name="Subscriptions" method="post" action="subscribe.php">
-				Sensor name: 
+				Sensor ID: 
            		<input type="text" name = "removeSensor">
 				</br></br>
-				<input type = "submit" value="Submit">
+				<input type = "submit" value="Remove Subscription">
          		</form>
 				
 		<?php
