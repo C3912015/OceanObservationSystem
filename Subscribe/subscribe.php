@@ -5,18 +5,17 @@ and is able to add or remove subscriptions to sensors.
 -->
 <html>
 	<body>
-
         <h1>Subscription Module</h1>
 		<h2>List of Sensors:</h2>
 		<?php
 			/*Shows all the sensor data*/
 			//Form information implemented from http://www.w3schools.com/html/html_forms.asp
-			include("/compsci/webdocs/msumner/web_docs/PHPconnectionDB.php");
+			include("../PHPconnectionDB.php");
 			//establish connection
 			$conn = connect();
 
 			//sql collect all values from sensors
-			$sql = 'SELECT * FROM sensors s,subscriptions sc where s.sensor_id = sc.sensor_id';
+			$sql = 'SELECT * FROM sensors s';
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -50,7 +49,51 @@ and is able to add or remove subscriptions to sensors.
 			oci_free_statement($stid);
 			oci_close($conn);
 		?>
-		
+			<!--User Subscriptions-->
+			<h2>List of User's Sensors:</h2>
+
+		<?php
+			/*Shows user sensor data*/
+			//establish connection
+			$conn = connect();
+
+			//sql collect all values from sensors
+			$sql = 'SELECT * FROM sensors s, subscriptions sc
+					WHERE s.sensor_id = sc.sensor_id
+					AND sc.person_id = 1';
+
+			//Prepare sql using conn and returns the statement identifier
+			$stid = oci_parse($conn, $sql);
+
+			//Execute a statement returned from oci_parse()
+			$res = oci_execute($stid);
+
+			//if error, retrieve the error using the oci_error() function & output an error
+			if (!$res) {
+				$err = oci_error($stid);
+				echo htmlentities($err['message']);
+			}
+
+			//Display results
+			$count = 0;
+			echo "<table>";
+		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+				foreach ($row as $item) {
+					echo $item.'&nbsp;';
+				}
+				if ($count == 0) {
+					echo '</table>';
+				}
+				else {
+					echo '</table><br/>';
+					}
+				$count += 1;
+		    }
+
+			// Free the statement identifier when closing the connection
+			oci_free_statement($stid);
+			oci_close($conn);
+		?>
 			<!--Add a Subscription-->
 			<h2>Add a Subscription</h2>
          		<form name="Subscriptions" method="post" action="subscribe.php">
@@ -58,8 +101,7 @@ and is able to add or remove subscriptions to sensors.
            		<input type="text" name = "addSensor">
 				</br></br>
 				<input type = "submit" value="Add Subscription">
-         		</form>
-				
+         		</form>		
 		<?php
 			/*Display Table with added Subscription*/
 			
@@ -79,7 +121,7 @@ and is able to add or remove subscriptions to sensors.
 			if (!$res) {
 				$err = oci_error($stid);
 				echo htmlentities($err['message']);
-			} else { echo 'Rows Extracted <br/>'; }
+			}
 		?>
 		
 			<!--Remove a Subscription-->
@@ -90,16 +132,18 @@ and is able to add or remove subscriptions to sensors.
 				</br></br>
 				<input type = "submit" value="Remove Subscription">
          		</form>
-				
 		<?php
 			/*Display Table with removed subscription*/
 			
 			//establish connection
 			$conn = connect();
-
+			if ($_POST["removeSensor"]){
+				$removeSensor = trim($_POST['removeSensor']);
+			}
 			//sql collect all values from sensors
-			$sql = 'INSERT INTO subscriptions Values(addSensor,1)';
-
+			$sql = 'DELETE FROM subscriptions 
+					WHERE person_id = 1 
+					AND sensor_id = {$removeSensor}';
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
 
@@ -110,7 +154,7 @@ and is able to add or remove subscriptions to sensors.
 			if (!$res) {
 				$err = oci_error($stid);
 				echo htmlentities($err['message']);
-			} else { echo 'Rows Extracted <br/>'; }
+			} 
 		?>
 	</body>
 </html>		
