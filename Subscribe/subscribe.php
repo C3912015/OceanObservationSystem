@@ -6,13 +6,18 @@ and is able to add or remove subscriptions to sensors.
 Resources
 Insert PHP form into SQL: http://stackoverflow.com/questions/7105406/insert-into-database-table-from-form-not-working-sql
 Form information: http://www.w3schools.com/html/html_forms.asp
+Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-php
 -->
 <html>
+	<head>
+	<link rel="stylesheet" href="CSS/subscribe.css" type="text/css">
+	</head>
 	<body>
 		<title>Subscriptions</title>
         <h1>Subscription Module</h1>
 		<h2>List of Sensors:</h2>
 		<?php
+
 			/*Shows all the sensor data*/
 			include("../PHPconnectionDB.php");
 			//establish connection
@@ -177,7 +182,7 @@ Form information: http://www.w3schools.com/html/html_forms.asp
 					$err = oci_error($stid);
 					echo htmlentities($err['message']);
 				}
-			header("Refresh:0");
+				header("Refresh:0");
 			} 
 		?>
 	</body>
