@@ -1,115 +1,146 @@
 <html>
     <body>
 	<h1>Welcome to Ocean Observation System</h1>
+        <?php         
+        //session start
+        session_name('Login');
+        session_start();
+        ?>
 
-        <?php   
-        //connect to database   	 
-        include("/compsci/webdocs/jchang3/web_docs/PHPconnectionDB.php");
-        $conn = connect();
+        <p>Hello <?php echo $_SESSION['usr'] ? $_SESSION['usr'] : 'Guest';?>!</p>
 
-        //validate user
-        if(isset($_POST['validate'])){
-            $USER=$_POST['user'];            		
-            $USER_PASSWORD=$_POST['user_password'];        	      
+	<!--If not logged in-->
+	<?php
+	if(!$_SESSION['id']):
+	?>
+        <form name="login" method="post" action="">
+            Username : <input type="text" name="user"/> <br/>
+            Password : <input type="text" name="user_password" id="user_password"/><br/>
+            <input type="submit" name="validate" value="Login"/>
+        </form>
+
+        <!--Output login errors, if any-->
+	<?php
+	if($_SESSION['msg']['login-err']){
+		echo $_SESSION['msg']['login-err'];
+		unset($_SESSION['msg']['login-err']);
+	}
+	?>
+
+	<!--Currently logged in-->
+	<?php else:?>
+
+        <!--Admin-->
+        <?php if($_SESSION['role']=='a'):?>
+            <!--insert admin links here-->
+        <?php endif;?>
+
+        <!--Data curator-->
+        <?php if($_SESSION['role']=='d'):?>
+            <!--insert curator links here-->
+        <?php endif;?>
+
+        <!--Scientist-->
+        <?php if($_SESSION['role']=='s'):?>
+            <!--insert scientist links here-->
+        <?php endif;?>
+
+        <!--Search-->
+        <form name="search" method="post" action="./search.php">
+            <input type="text" name="keywords"/>Keyword(s)<br/>
+            <input type="text" name="sensor_info"/>Sensor Type and/or Location<br/>
+            <input type="text" name="time_begin" value="From"/>-<input type="text" name="time_end"
+ value="To"/>Time Period (YYYY-MM-DD)<br/>
+            <input type="submit" name="search" value="Search"/>
+        </form>
+
+
+        <!--Edit personal information-->
+        <a href="./user-settings.php"> Change Personal Information</a>
+
+        <!--Log off-->
+        <p><a href="?logoff">Log off</a></p>
+
+        <!--Closing the IF-ELSE construct-->
+	<?php endif;?>
+     
+
+        <?php
+        session_set_cookie_params(60*60*2);  // 2 hour session duration
+	//If you are logged in, but you don't have a cookie (browser restart)
+	if($_SESSION['id'] && !isset($_COOKIE['cookie'])){
+            //Destroy the session
+	    $_SESSION = array();
+	    session_destroy();
 	}
 
-        //sql command
-        $sql = "SELECT * FROM users U WHERE U.user_name='$USER' AND U.password='$USER_PASSWORD'";
+	//If you are logging off
+	if(isset($_GET['logoff'])){
+	    $_SESSION = array();
+	    session_destroy();
+	    header("Location: login.php");
+	    exit;
+	}
+
+	//If you are logging on
+	if($_POST['validate']=='Login'){
+            unset($err);
+	    $err = array();
+
+	    if(!$_POST['user'] || !$_POST['user_password'])
+	        $err[] = 'All the fields must be filled in';
+
+	    if(!count($err)){
+                include("./PHPconnectionDB.php");
+                $conn = connect();
+                //TODO Escaping all input data
+                $USER=$_POST['user'];            		
+                $USER_PASSWORD=$_POST['user_password'];  
+
+                //sql command
+                $sql = "SELECT * FROM users U WHERE U.user_name='$USER' AND U.password='$USER_PASSWORD'";
            
-        //Prepare sql using conn and returns the statement identifier
-        $stid = oci_parse($conn, $sql );
+                //Prepare sql using conn and returns the statement identifier
+                $stid = oci_parse($conn, $sql );
           
-        //Execute a statement returned from oci_parse()
-        $res=oci_execute($stid); 
-        
-        //return to homepage function
-        function Redirect($url, $permanent = false){
-            header('Location: ' . $url, true, $permanent ? 301 : 302);
-            exit();
-        }
-           
-        //if error, retrieve the error using the oci_error() function & output an error
-        if(!$res){
-	$err = oci_error($stid);
+                //Execute a statement returned from oci_parse()
+                $res=oci_execute($stid);
 
-	//echo htmlentities($err['message']);
-        oci_close($conn);
-        Redirect('http://consort.cs.ualberta.ca/~jchang3/login.html', false);
-        }
-        
-        $row = oci_fetch($stid);
-        //invalid user
-        if(!$row){
-        oci_close($conn);
-        Redirect('http://consort.cs.ualberta.ca/~jchang3/login.html', false);
-        }
- 
-        echo 'Thank You !<br/> Your username is '.$USER.'.<br/> Your Name is '.$USER_PASSWORD.'.<br/>';
-
-        //display personal information
-        $pid = oci_result($stid, 'PERSON_ID');
-        //echo $pid;
-        $sql = "SELECT * FROM persons P WHERE P.person_id='$pid'";
-        $stid = oci_parse($conn, $sql );
-        $res=oci_execute($stid);
-
-        if(!$res){
-	$err = oci_error($stid);
-	echo htmlentities($err['message']);
-        }
-        else{
-            $row = oci_fetch_array($stid, OCI_ASSOC);
-            foreach ($row as $item){
-	        echo $item.'&nbsp;';
-	    }
-
-        $firstname = oci_result($stid, 'FIRST_NAME');
-        $lastname = oci_result($stid, 'LAST_NAME');
-        $address = oci_result($stid, 'ADDRESS');
-        $email = oci_result($stid, 'EMAIL');
-        $phone = oci_result($stid, 'PHONE');
-
-            //edit personal information
-            /*<form name="registration" method="post" action="PHPexample5.php">
-            CCID : <input type="text" name="ccid"/> <br/>
-            Name : <input type="text" name="fullname"/><br/>
-            <input type="submit" name="validate" value="OK"/>
-            </form>*/
+                //if execution error, retrieve the error using the oci_error() function & output an error
+                if(!$res){
+	            //$ocierr = oci_error($stid);
+                    $err[]=oci_error($stid);
+	            //echo htmlentities($err['message']);
+                    oci_close($conn);
+                    header("Location: login.php");
+                    exit;
+                }
             
-        }
+                $row = oci_fetch($stid);
+            
+                //login successfull
+                if($row){
+                   //session variables
+                   $_SESSION['usr'] = oci_result($stid, 'USER_NAME');
+                   $_SESSION['id'] = session_id();
+                   $_SESSION['pid'] = oci_result($stid, 'PERSON_ID');
+                   $_SESSION['role'] = oci_result($stid, 'ROLE');
+                   setcookie('cookie');
+                   
+                }
+                else $err[]='Invalid username and/or password';
+            }
 
-        //close connection
-        oci_close($conn);
+            if($err)
+                //Save the error messages in the session
+                unset($_SESSION['msg']['login-err']);
+	        $_SESSION['msg']['login-err'] = implode('<br />',$err);
+
+            oci_close($conn);
+	    header("Location: login.php");
+	    exit;
+	}
 	?>
-
-        <form id='settings' action='user-settings.php' method ="post">
-            <input type="hidden" name="settings" value="<?php echo $pid; ?>"/>
-            <a href="./user-settings.html" onclick="document.getElementById('settings').submit();">Change Personal Information</a>
-        </form>
-	
-        <?php   
-/*
-        //first method    	 
-		if(isset($_POST['validate'])){        	
-			$USER=$_POST['user'];            		
-			$USER_PASSWORD=$_POST['user_password'];
-	           	echo 'Thank You !<br/> Your username is '.$USER.'.<br/> Your Name is '.$USER_PASSWORD.'.';         
-		}	
-*/
-	?>
-        
-
-
 	<br/>
-	
-	<?php     
-		// second method	 
-	/*	if(isset($_POST['validate'])){        	
-		       echo 'Thank You !'.'<br/>'; 
-	                    foreach($_POST as $Key => $Value){
-		                echo 'Your '.$Key.' is '.$Value.'<br/>';           
-		         } 		
-		}	
-	 */?>
     </body>
 </html>
