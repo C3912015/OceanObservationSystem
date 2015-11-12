@@ -42,7 +42,10 @@
 
         <!--Scientist-->
         <?php if($_SESSION['role']=='s'):?>
-            <!--insert scientist links here-->
+            <form name="submit" method="post" 
+			action = "../Subscribe/subscribe.php">
+			<input type = "submit" value="Subscriptions">			
+			</form>
         <?php endif;?>
 
         <!--Search-->
@@ -91,7 +94,7 @@
 	        $err[] = 'All the fields must be filled in';
 
 	    if(!count($err)){
-                include("./PHPconnectionDB.php");
+                include("../PHPconnectionDB.php");
                 $conn = connect();
                 //TODO Escaping all input data
                 $USER=$_POST['user'];            		

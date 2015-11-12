@@ -61,7 +61,6 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 		?>
 			<!--User Subscriptions-->
 			<h2>List of User's Sensors:</h2>
-
 		<?php
 			/*Shows user sensor data*/
 			//establish connection

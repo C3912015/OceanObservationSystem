@@ -1,4 +1,4 @@
-/* Mock data to test our code*/
+/* Mock data to test code*/
 
 /*Data for persons*/
 
