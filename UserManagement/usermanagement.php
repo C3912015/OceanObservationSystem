@@ -18,6 +18,7 @@ Add/Update/Remove User
        // if user is admin
        //establish connection
        $conn = connect();
+
  	// Delete User
        if($_POST["userRemove"]){
           $user_ID = trim($_POST['userNameR']);
@@ -76,7 +77,7 @@ Add/Update/Remove User
        } 
 
 	// Update user
-	//Does not handle username change right now
+	//Does not handle username change right now - add new username textbox
 
 	if($_POST["userUpdate"]){
           //get values and check they are not null ??
@@ -128,6 +129,58 @@ Add/Update/Remove User
          $res = oci_execute($updateUser);
 
        }
+
+	
+	//add person
+		
+
+	//remove person
+ 	if($_POST["personRemove"]){
+          $user_ID = trim($_POST['personR']);
+          $count = 0;
+
+          //check if person exists in DB
+          // if it does, remove it
+          if($user_ID != NULL){
+             $sqlPersonExist = "select * from persons 
+				where person_id = '{$user_ID}'";
+             $personExist = oci_parse($conn, $sqlPersonExist);
+             $pExistRes = oci_execute($personExist);
+
+             while (($row = oci_fetch_array($personExist, OCI_ASSOC)))
+             {
+                $count++;
+             }
+             //user exists, so remove it
+             if($count > 0){
+
+		//remove from subs
+                $sqlDELsub = "DELETE FROM subscriptions 
+			WHERE person_id='{$user_ID}'";
+                $rmPersonsub = oci_parse($conn, $sqlDELsub);
+                $res = oci_execute($rmPersonsub);
+
+		//remove frm users
+                $sqlDELu = "DELETE FROM users 
+			WHERE person_id='{$user_ID}'";
+                $rmPersonU = oci_parse($conn, $sqlDELu);
+                $res = oci_execute($rmPersonU);
+
+		// remove from person
+                $sqlDEL = "DELETE FROM persons 
+			WHERE person_id='{$user_ID}'";
+                $rmPerson = oci_parse($conn, $sqlDEL);
+                $res = oci_execute($rmPerson);
+                echo 'Person removed';
+             //user doesn't exist
+             }else{echo "Unable to remove nonexistant person.";}
+          //no input given
+          //oci_free_statement($UserExist);
+          } else { echo "No person ID given"; }
+       }
+
+	//update person - cannot update person_id (add box like user update)
+	
 
        echo
        '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go
