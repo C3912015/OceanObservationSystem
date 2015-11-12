@@ -1,12 +1,12 @@
+       <?php         
+        //session start
+        //session_name('Login');
+        session_start();
+        ?>
 <html>
     <body>
 	<h1>Welcome to Ocean Observation System</h1>
-        <?php         
-        //session start
-        session_name('Login');
-        session_start();
-        ?>
-
+ 
         <p>Hello <?php echo $_SESSION['usr'] ? $_SESSION['usr'] : 'Guest';?>!</p>
 
 	<!--If not logged in-->
@@ -15,7 +15,8 @@
 	?>
         <form name="login" method="post" action="">
             Username : <input type="text" name="user"/> <br/>
-            Password : <input type="text" name="user_password" id="user_password"/><br/>
+            Password : <input type="text" name="user_password" 		
+			id="user_password"/><br/>
             <input type="submit" name="validate" value="Login"/>
         </form>
 
@@ -42,10 +43,8 @@
 
         <!--Scientist-->
         <?php if($_SESSION['role']=='s'):?>
-            <form name="submit" method="post" 
-			action = "../Subscribe/subscribe.php">
-			<input type = "submit" value="Subscriptions">			
-			</form>
+		<?php echo $_SESSION['usr'];?>
+            <p><a href="../Subscribe/subscribe.php"> View Subscriptions</a></p>
         <?php endif;?>
 
         <!--Search-->

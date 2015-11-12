@@ -8,6 +8,11 @@ Insert PHP form into SQL: http://stackoverflow.com/questions/7105406/insert-into
 Form information: http://www.w3schools.com/html/html_forms.asp
 Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-php
 -->
+<?php 
+	//Start session to get user id	
+	session_start();
+	$pid = $_SESSION['pid'];
+?>
 <html>
 	<head>
 	<link rel="stylesheet" href="CSS/subscribe.css" type="text/css">
@@ -17,7 +22,6 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
         <h1>Subscription Module</h1>
 		<h2>List of Sensors:</h2>
 		<?php
-
 			/*Shows all the sensor data*/
 			include("../PHPconnectionDB.php");
 			//establish connection
@@ -65,11 +69,11 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			/*Shows user sensor data*/
 			//establish connection
 			$conn = connect();
-
+			
 			//sql collect all values from sensors
-			$sql = 'SELECT * FROM sensors s, subscriptions sc
+			$sql = "SELECT * FROM sensors s, subscriptions sc
 					WHERE s.sensor_id = sc.sensor_id
-					AND sc.person_id = 2';
+					AND sc.person_id = {$pid}";
 
 			//Prepare sql using conn and returns the statement identifier
 			$stid = oci_parse($conn, $sql);
@@ -124,7 +128,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 				$addSensor = $_POST["addSensor"];
 			
 				//sql collect all values from sensors
-				$sql = "INSERT INTO subscriptions Values({$addSensor}, 2)";
+				$sql = "INSERT INTO subscriptions Values({$addSensor}, {$pid})";
 
 				//Prepare sql using conn and returns the statement identifier
 				$stid = oci_parse($conn, $sql);
@@ -165,7 +169,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			
 				//sql collect all values from sensors
 				$sql = "DELETE FROM subscriptions 
-						WHERE person_id = 2 
+						WHERE person_id = $pid 
 						AND sensor_id = ({$removeSensor})";
 
 				/*Prepare sql using conn and returns the 
