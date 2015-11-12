@@ -1,14 +1,32 @@
 <html>
    <body>
+     <?php
+	include("../../PHPconnectionDB.php");
+	$conn = connect();
+	?>
      <!-- Check if Sys Admin -->
      <h1> Remove a Sensor </h1>
       <!-- Sensor form -->
       <form  name = "addRmSensor" method = "post" action =
 	    "sensorManagement.php"> </p>
 
-	<!-- Remove a form -->
+	<!-- Remove form -->
 	Sensor ID: <input type = "text" name = "RSensorID"/> </p>
+        <select>
 
+	<?php
+	/* Add drop down menu
+	   $sqlSensorExist = "select * from sensors 
+				where sensor_id = {$sensor_ID}";
+           $sensorExist = oci_parse($conn, $sqlSensorExist);
+           $sExistRes = oci_execute($sensorExist);
+	   while($row = oci_fetch_array($sensorExist, OCI_ASSOC)){
+	     echo '<option value = "'$row[0]'">"$row[0]"</option>';
+	   }
+	   */
+	?>
+	</select>
+	</p>
 	<!-- remove button -->
 	<input type = "submit" name = "RemoveSensor" value =
 	"Remove Sensor"/>
