@@ -43,8 +43,7 @@
 
         <!--Scientist-->
         <?php if($_SESSION['role']=='s'):?>
-		<?php echo $_SESSION['usr'];?>
-            <p><a href="../Subscribe/subscribe.php"> View Subscriptions</a></p>
+        	<p><a href="../Subscribe/subscribe.php"> View Subscriptions</a></p>
         <?php endif;?>
 
         <!--Search-->

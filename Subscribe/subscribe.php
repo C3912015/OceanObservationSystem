@@ -8,16 +8,26 @@ Insert PHP form into SQL: http://stackoverflow.com/questions/7105406/insert-into
 Form information: http://www.w3schools.com/html/html_forms.asp
 Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-php
 -->
+
 <?php 
 	//Start session to get user id	
 	session_start();
 	$pid = $_SESSION['pid'];
 ?>
+<?php 
+	if ($pid == ''){
+		header("Location: ../Login/login.php");
+		exit;
+	}
+?>
+
+
 <html>
 	<head>
 	<link rel="stylesheet" href="CSS/subscribe.css" type="text/css">
 	</head>
 	<body>
+
 		<title>Subscriptions</title>
         <h1>Subscription Module</h1>
 		<h2>List of Sensors:</h2>
