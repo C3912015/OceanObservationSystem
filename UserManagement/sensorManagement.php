@@ -28,6 +28,40 @@
              }
              //sensor_id exists, so remove it
              if($count > 0){
+		//remove from subscriptions
+                $sqlDELsub = "DELETE FROM subscriptions 
+			WHERE sensor_id={$sensor_ID}";
+                $rmSensor = oci_parse($conn, $sqlDELsub);
+		if($res = oci_execute($rmSensor)){
+		}else{ //do nothing
+		}
+		
+		// remove from audio_recordings
+		$sqlDELaudio = "DELETE FROM audio_recordings 
+			WHERE sensor_id={$sensor_ID}";
+                $rmSensor = oci_parse($conn, $sqlDELaudio);
+		if($res = oci_execute($rmSensor)){
+		}else{ //do nothing
+		}
+		
+
+		// remove from images
+		$sqlDELimages = "DELETE FROM sensors 
+			WHERE sensor_id={$sensor_ID}";
+                $rmSensor = oci_parse($conn, $sqlDELimages);
+		if($res = oci_execute($rmSensor)){
+		}else{ //do nothing
+		}
+
+		// remove from scalar_data
+		$sqlDELscalar = "DELETE FROM sensors 
+			WHERE sensor_id={$sensor_ID}";
+                $rmSensor = oci_parse($conn, $sqlDELscalar);
+		if($res = oci_execute($rmSensor)){
+		}else{ //do nothing
+		}
+
+		// remove from sensors		
                 $sqlDEL = "DELETE FROM sensors 
 			WHERE sensor_id={$sensor_ID}";
                 $rmSensor = oci_parse($conn, $sqlDEL);
@@ -47,7 +81,7 @@
          if($_POST['ASensorID'] != NULL){ $sensor_ID = $_POST['ASensorID']; 
          } else { 
             echo 'No sensor ID given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagement.html">Go Back</a>';
+            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagementIn.php">Go Back</a>';
             exit;
          }
          //if(isset($_POST['sLocation'])){}
@@ -64,7 +98,7 @@
          $res = oci_execute($addSensor);
        }
        echo
-       '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagement.html">Go
+       '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagementIn.php">Go
        Back</a>';
        oci_close($conn);
     ?>
