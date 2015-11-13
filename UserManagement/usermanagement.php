@@ -1,11 +1,11 @@
 <!-- Sensor and User Management Options
 Sys Admin can:
-- Enter user
-- Update user
-- Remove user
+- Enter user/person
+- Update user/person
+- Remove user/person
 - Add sensor
 - Remove sensor
-Add/Update/Remove User
+Add/Update/Remove User/Person
 -->
 
 
@@ -16,6 +16,7 @@ Add/Update/Remove User
        include("../../PHPconnectionDB.php");
 
        // if user is admin
+
        //establish connection
        $conn = connect();
 
@@ -48,13 +49,12 @@ Add/Update/Remove User
              //user doesn't exist
              }else{echo "Unable to remove nonexistant user.";}
           //no input given
-          //oci_free_statement($UserExist);
           } else { echo "No user given"; }
        }
 	
        //Add user
        if($_POST["userAdd"]){
-          //get values and check they are not null ??
+          //get values and check if username is given
          if($_POST['userNameA'] != NULL){ $user_ID = $_POST['userNameA']; 
          } else { 
             echo 'No username given'; 
@@ -66,7 +66,7 @@ Add/Update/Remove User
         $person_id = $_POST['userPersonA'];
 	$date = $_POST['userDateA'];
 	
-	//TODO check that person exists 
+	//TODO check that person exists and that username doesn't
 
          $sqlADD = "INSERT INTO users VALUES ('{$user_ID}',
          '{$password}', '{$role}', {$person_id}, TO_DATE('$date','YYYY-MM-DD'))";
@@ -77,10 +77,8 @@ Add/Update/Remove User
        } 
 
 	// Update user
-	//Does not handle username change right now - add new username textbox
-
 	if($_POST["userUpdate"]){
-          //get values and check they are not null ??
+          //get values, check that username isn't null
          if($_POST['userNameU'] != NULL){ $user_ID = $_POST['userNameU']; 
          } else { 
             echo 'No username given'; 
@@ -95,14 +93,15 @@ Add/Update/Remove User
 	$res = oci_execute($getUser);
 
 	//go through each field to see if it was updated,
-	// otherwise set it to current value
+	// otherwise set it to value from query
 	$row = oci_fetch_row($getUser);
-	echo $row[0];
-	echo $row[1];
-	echo $row[2];
+
+	if($_POST['userNewU']!=NULL){
+		$id = $_POST['userNewU'];
+	} else { $id = $row[0]; }
+
 	if($_POST['userPWU']!=NULL){
 		$password = $_POST['userPWU'];
-	echo $password;
 	} else { $password = $row[1]; }
 
 	if($_POST['userRoleU'] != NULL){
@@ -117,9 +116,8 @@ Add/Update/Remove User
 		$date = $_POST['userDateU'];
 	} else { $date = $row[4]; }
 
-	//update user
-	echo $password;
-         $sqlUpdate = "UPDATE users SET user_name = '{$user_ID}',
+	//query to update user
+         $sqlUpdate = "UPDATE users SET user_name = '{$id}',
          password = '{$password}', role = '{$role}', 
 	person_id = {$person_id}, 
 	date_registered = TO_DATE('$date','YYYY-MON-DD') 
@@ -132,6 +130,30 @@ Add/Update/Remove User
 
 	
 	//add person
+	 if($_POST["addPerson"]){
+          //get values and check that person_id is not null
+         	if($_POST['personIDA'] != NULL){ $user_ID = $_POST['personIDA']; 
+         } else { 
+            echo 'No person ID given'; 
+            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            exit;
+        }
+
+        $firstName = $_POST['personFirstA'];
+        $lastName = $_POST['personLastA'];
+        $address = $_POST['personAddressA'];
+	$email = $_POST['personEmailA'];
+	$phone = $_POST['personPhoneA'];
+
+
+         $sqlADD = "INSERT INTO persons VALUES ({$user_ID},
+         '{$firstName}', '{$lastName}', '{$address}', '{$email}', 	'{$phone}')";
+         echo $sqlADD;
+         $addPerson = oci_parse($conn, $sqlADD);
+         $res = oci_execute($addPerson);
+
+       } 
+
 		
 
 	//remove person
@@ -160,13 +182,13 @@ Add/Update/Remove User
                 $rmPersonsub = oci_parse($conn, $sqlDELsub);
                 $res = oci_execute($rmPersonsub);
 
-		//remove frm users
+		//remove from users
                 $sqlDELu = "DELETE FROM users 
 			WHERE person_id='{$user_ID}'";
                 $rmPersonU = oci_parse($conn, $sqlDELu);
                 $res = oci_execute($rmPersonU);
 
-		// remove from person
+		// remove from persons
                 $sqlDEL = "DELETE FROM persons 
 			WHERE person_id='{$user_ID}'";
                 $rmPerson = oci_parse($conn, $sqlDEL);
@@ -175,11 +197,10 @@ Add/Update/Remove User
              //user doesn't exist
              }else{echo "Unable to remove nonexistant person.";}
           //no input given
-          //oci_free_statement($UserExist);
           } else { echo "No person ID given"; }
        }
 
-	//update person - cannot update person_id (add box like user update)
+	//update person 
 	
 
        echo

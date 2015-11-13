@@ -25,7 +25,7 @@
        	   <td><input type = "text" name = "userPersonA"></td></p>
 	 </tr>
 	 <tr>
-       	   <td>Date Registered:</td>
+       	   <td>Date Registered</br>(YYYY-MM-DD):</td>
        	   <td><input type = "text" name = "userDateA"></td></p>
 	 </tr>
 	</table>
@@ -39,6 +39,11 @@
            <td>Username:</td>
            <td><input type = "text" name = "userNameU"></td></p>
 	 </tr>
+         <tr>
+           <td>New Username:</td>
+           <td><input type = "text" name = "userNewU"></td></p>
+	 </tr>
+
 	 <tr>
        	   <td>Password:</td>
        	   <td><input type = "text" name = "userPWU"></td></p>
@@ -52,7 +57,7 @@
        	   <td><input type = "text" name = "userPersonU"></td></p>
 	 </tr>
 	 <tr>
-       	   <td>Date Registered:</td>
+       	   <td>Date Registered</br>(YYYY-MM-DD):</td>
        	   <td><input type = "text" name = "userDateU"></td></p>
 	 </tr>
 	</table>
@@ -96,6 +101,10 @@
            <td><input type = "text" name = "personIDU"></td></p>
 	 </tr>
 	 <tr>
+         <tr>
+           <td>New Person ID:</td>
+           <td><input type = "text" name = "personNewU"></td></p>
+	 </tr>
        	   <td>First Name:</td>
        	   <td><input type = "text" name = "personFirstU"></td></p>
 	 </tr>
