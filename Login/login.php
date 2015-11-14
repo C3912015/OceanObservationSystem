@@ -34,6 +34,8 @@
         <!--Admin-->
         <?php if($_SESSION['role']=='a'):?>
             <!--insert admin links here-->
+	    <a href = "../UserManagement/usermanagementIn.php"> User 			Management</a> <br>
+	 <a href = "../UserManagement/sensorManagementIn.php"> Sensor 			Management</a> </p>
         <?php endif;?>
 
         <!--Data curator-->

@@ -58,7 +58,7 @@ Add/Update/Remove User/Person
          if($_POST['userNameA'] != NULL){ $user_ID = $_POST['userNameA']; 
          } else { 
             echo 'No username given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
             exit;
         }
         $password = $_POST['userPWA'];
@@ -83,7 +83,7 @@ Add/Update/Remove User/Person
          if($_POST['userNameU'] != NULL){ $user_ID = $_POST['userNameU']; 
          } else { 
             echo 'No username given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -136,7 +136,7 @@ Add/Update/Remove User/Person
          	if($_POST['personIDA'] != NULL){ $user_ID = $_POST['personIDA']; 
          } else { 
             echo 'No person ID given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -208,7 +208,7 @@ Add/Update/Remove User/Person
          if($_POST['personIDU'] != NULL){ $user_ID = $_POST['personIDU']; 
          } else { 
             echo 'No person ID given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -254,7 +254,7 @@ Add/Update/Remove User/Person
        }
 
        echo
-       '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go
+       '<p><a href="../UserManagement/usermanagementIn.php">Go
        Back</a>';
        oci_close($conn);
     ?>
