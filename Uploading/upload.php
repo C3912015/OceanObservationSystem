@@ -13,9 +13,14 @@ Curator can:
   <body>
     <!-- If scalar data -->
     <!-- scalar_data (id, sensor_id, date_created, value) -->
-	<buton> Hello </button>
+    <?php
+	//current working directory
+    	$directory_self  = str_replace(basename($_SERVER['PHP_SELF']), '',$_SERVER['PHP_SELF']);
 
-
+	//location of upload handler script
+	$uploadHandler = 'http' . $_SERVER['HTTP_HOST'] . $director_self . 'upload.processor/php';	
+    ?>
+hello
     <!-- If image .jpg -->
     <!-- images (image_id, sensor_id, date_created , recorded_data, thumbnail, description) -->
     
