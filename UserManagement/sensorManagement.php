@@ -1,5 +1,8 @@
 <!-- Add/Remove Sensor -->
-
+<?php session_start();?>
+<?php if($_SESSION['role']!='a'){
+	header("Location: ../Login/login.php");
+} ?>
 <html>
   <body>
     <?php
@@ -81,12 +84,9 @@
          if($_POST['ASensorID'] != NULL){ $sensor_ID = $_POST['ASensorID']; 
          } else { 
             echo 'No sensor ID given'; 
-            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagementIn.php">Go Back</a>';
+            echo '<p><a href="../UserManagement/sensorManagementIn.php">Go Back</a>';
             exit;
          }
-         //if(isset($_POST['sLocation'])){}
-         //if(isset($_POST['sType'])){}
-         //if(isset($_POST['sDesc'])){}
          $location = $_POST['sLocation'];
          $sensorType = $_POST['sType'];
          $sensorDesc = $_POST['sDesc'];
@@ -98,7 +98,7 @@
          $res = oci_execute($addSensor);
        }
        echo
-       '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/sensorManagementIn.php">Go
+       '<p><a href="../UserManagement/sensorManagementIn.php">Go
        Back</a>';
        oci_close($conn);
     ?>

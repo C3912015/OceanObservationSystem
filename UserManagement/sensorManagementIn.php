@@ -1,5 +1,9 @@
+<?php session_start(); ?>
 <html>
-   <body>
+   <body>.
+     <?php if($_SESSION['role']!='a'){
+	header("Location: ../Login/login.php");
+     } ?>
      <?php
 	include("../../PHPconnectionDB.php");
 	$conn = connect();
@@ -12,6 +16,7 @@
 
 	<!-- Remove form -->
 	Sensor ID: <input type = "text" name = "RSensorID"/> </p>
+<!--
         <select>
 
 	<?php
@@ -25,7 +30,7 @@
 	   }
 	   */
 	?>
-	</select>
+	</select> -->
 	</p>
 	<!-- remove button -->
 	<input type = "submit" name = "RemoveSensor" value =
@@ -43,6 +48,7 @@
 	<input type = "submit" name = "AddSensor" value = "Add Sensor"/>
 
 	</form>
+	<a href = "../Login/login.php">Go Back</a>
    </body>
 </html>
 	

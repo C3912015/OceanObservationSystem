@@ -7,8 +7,11 @@ Sys Admin can:
 - Remove sensor
 Add/Update/Remove User/Person
 -->
-
-
+<!-- start session -->
+<?php session_start();?>
+<?php if($_SESSION['role']!='a'){
+	header("Location: ../Login/login.php");
+} ?>
 <html>
   <body>
     <?php
@@ -66,7 +69,7 @@ Add/Update/Remove User/Person
         $person_id = $_POST['userPersonA'];
 	$date = $_POST['userDateA'];
 	
-	//TODO check that person exists and that username doesn't
+	//TODO check that person exists and that username doesn't (handle error)
 
          $sqlADD = "INSERT INTO users VALUES ('{$user_ID}',
          '{$password}', '{$role}', {$person_id}, TO_DATE('$date','YYYY-MM-DD'))";

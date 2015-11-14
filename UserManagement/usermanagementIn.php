@@ -3,8 +3,9 @@
   <body>
      <!-- Check if Sys Admin -->
      <!-- Add/Delete/Update users and persons -->
-
-     <?php if($_SESSION['role']=='a'):?>
+     <?php if($_SESSION['role']!='a'){
+	header("Location: ../Login/login.php");
+     } ?>
      <h2>User Account Management</h2>
      <h4><u>Add User</h4></u></p>
      <form name = "UserManagement" method = "post" action = "usermanagement.php">
@@ -124,9 +125,5 @@
 	</table>
         <input type = "submit" name = "updatePerson" value = "Update Person" >
 	</form>
-	<?php else: ?>
-	You do not have access to this page
-	<?php endif; ?>
-	<p><a href="../Login/login.php">Go Back</a>
   </body>
 </html>
