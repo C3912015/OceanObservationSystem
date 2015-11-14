@@ -2,7 +2,6 @@
   <body>
      <!-- Check if Sys Admin -->
      <!-- Add/Delete/Update users and persons -->
-     <!-- http://stackoverflow.com/questions/15318032/divide-html-page-in-half-with-no-overlapping -->
      <h2>User Account Management</h2>
      
      <h4><u>Add User</h4></u></p>
@@ -101,10 +100,6 @@
            <td><input type = "text" name = "personIDU"></td></p>
 	 </tr>
 	 <tr>
-         <tr>
-           <td>New Person ID:</td>
-           <td><input type = "text" name = "personNewU"></td></p>
-	 </tr>
        	   <td>First Name:</td>
        	   <td><input type = "text" name = "personFirstU"></td></p>
 	 </tr>

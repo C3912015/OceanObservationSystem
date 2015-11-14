@@ -77,6 +77,7 @@ Add/Update/Remove User/Person
        } 
 
 	// Update user
+	// no doesn't change person_id in other tables (subs and persons)
 	if($_POST["userUpdate"]){
           //get values, check that username isn't null
          if($_POST['userNameU'] != NULL){ $user_ID = $_POST['userNameU']; 
@@ -201,13 +202,61 @@ Add/Update/Remove User/Person
        }
 
 	//update person 
-	
+	//doesn't change values in other tables (users and subs)
+		if($_POST["updatePerson"]){
+          //get values, check that person id isn't null
+         if($_POST['personIDU'] != NULL){ $user_ID = $_POST['personIDU']; 
+         } else { 
+            echo 'No person ID given'; 
+            echo '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go Back</a>';
+            exit;
+        }
+
+	//get person with requested id
+	$sqlGetPerson = "SELECT * from persons 
+			WHERE person_id = '{$user_ID}'";
+	$getPerson = oci_parse($conn, $sqlGetPerson);
+	$res = oci_execute($getPerson);
+
+	//go through each field to see if it was updated,
+	// otherwise set it to value from query
+	$row = oci_fetch_row($getPerson);
+
+	if($_POST['personFirstU']!=NULL){
+		$first = $_POST['personFirstU'];
+	} else { $first = $row[1]; }
+
+	if($_POST['personLastU'] != NULL){
+		$last = $_POST['personLastU'];
+	} else { $last = $row[2]; }
+
+	if($_POST['personAddressU'] != NULL){
+		$address = $_POST['personAddressU'];
+	} else { $address = $row[3]; }
+
+	if($_POST['personEmailU'] != NULL){
+		$email = $_POST['personEmailU'];
+	} else { $email = $row[4]; }
+
+	if($_POST['personPhoneU'] != NULL){
+		$phone = $_POST['personPhoneU'];
+	} else { $phone = $row[5]; }
+
+	//update in persons
+         $sqlUpdate = "UPDATE persons SET person_id = {$user_ID},
+         first_name = '{$first}', last_name = '{$last}', 
+	address = '{$address}', email = '{$email}', 
+	phone = '{$phone}'	 
+	WHERE person_id = '{$user_ID}'";
+         echo $sqlUpdate;
+         $updateUser = oci_parse($conn, $sqlUpdate);
+         $res = oci_execute($updateUser);
+       }
 
        echo
        '<p><a href="http://consort.cs.ualberta.ca/~olexson/OceanObservationSystem/UserManagement/usermanagementIn.php">Go
        Back</a>';
        oci_close($conn);
-       
     ?>
   </body>
 </html>
