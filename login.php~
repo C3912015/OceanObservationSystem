@@ -1,6 +1,6 @@
        <?php         
         //session start
-        //session_name('Login');
+        session_name('Login');
         session_start();
         ?>
 <html>
@@ -34,8 +34,8 @@
         <!--Admin-->
         <?php if($_SESSION['role']=='a'):?>
             <!--insert admin links here-->
-	    <a href = "../UserManagement/usermanagementIn.php"> User 			Management</a> <br>
-	 <a href = "../UserManagement/sensorManagementIn.php"> Sensor 			Management</a> </p>
+	    	<a href = "usermanagementIn.php"> User Management</a> <br>
+	 		<a href = "sensorManagementIn.php"> Sensor Management</a> </p>
         <?php endif;?>
 
         <!--Data curator-->
@@ -45,7 +45,8 @@
 
         <!--Scientist-->
         <?php if($_SESSION['role']=='s'):?>
-        	<p><a href="../Subscribe/subscribe.php"> View Subscriptions</a></p>
+        	<p><a href="subscribe.php"> View Subscriptions</a></p>
+			<p><a href="subscribe.php"> Data Analysis</a></p>
         <?php endif;?>
 
         <!--Search-->
@@ -94,7 +95,7 @@
 	        $err[] = 'All the fields must be filled in';
 
 	    if(!count($err)){
-                include("../PHPconnectionDB.php");
+                include("PHPconnectionDB.php");
                 $conn = connect();
                 //TODO Escaping all input data
                 $USER=$_POST['user'];            		
