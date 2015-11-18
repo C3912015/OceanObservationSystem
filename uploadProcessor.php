@@ -63,19 +63,35 @@ $fName = $_FILES[$fieldname]['name'];
 $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 	//If scalar data .csv
 	//scalar_data (id, sensor_id, date_created, value)
-	if ($ext_== "csv"){
+	if ($ext == "csv"){
 		echo "CSV";
+		//go through file
+		//generate id and get info
+		//query
 	}
 	//If image .jpg
 	//images (image_id, sensor_id, date_created , 			recorded_data, thumbnail, description)
 	elseif($ext == "jpg"){
     		echo "JPG";
-
+		//generate id
+		
+		//get info
+		$sensor_id = $_POST['iSid'];
+		$date = $_POST['iDate'];
+		$desc = $_POST['iDesc'];
+		//query
+		
 	}
 	//If audio .wav
 	//audio_recordings (recording_id, sensor_id, date_created, 	length, recorded_data, description)
 	elseif($ext == "wav"){
 		echo "WAV";
+		//generate id
+
+		//get info
+
+		//query
+
 	} else {
 	//not the right format
 		echo "not right format";

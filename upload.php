@@ -15,7 +15,7 @@ Curator can:
 
 	//location of upload handler script
 	//$uploadHandler = 'http' . $_SERVER['HTTP_HOST'] . $director_self . 'uploadProcessor.php';
-	$uploadHandler = "../Uploading/uploadProcessor.php";
+	$uploadHandler = "uploadProcessor.php";
 	
     ?>
 <html lang = "en">
@@ -27,17 +27,14 @@ Curator can:
 	<body>
 	<form id = "Upload" action = "<?php echo $uploadHandler ?>" enctype = "multipart.form-data" method = "post">
 	<h2>Audio Information</h2>
-		Recording ID: <input type = "text" name = "aRid"/></p>
 		Sensor ID: <input type = "text" name = "aSid"/> </p>
-		Date Created (DD/MM/YYYY hh:mm:ss): <input type = "text" name = "aDate"/></p>
+		Date Created</br>(DD/MM/YYYY hh:mm:ss): <input type = "text" name = "aDate"/></p>
 		Length: <input type = "text" name = "aLength"/></p>
 		Description: <input type = "text" name = "aDesc"/><p>
 		<h2>Image Information</h2>
-		Image ID: <input type = "text" name = "iIid"/></p>
-		Sensor ID: <input type = "text" name = iSid"/></p>
-		Date Created (DD/MM/YYYY hh:mm:ss) : <input type = "text" name = "iDate"/></p>
-		Description: <input type = "text" name = iDesc"/></p>
-		
+		Sensor ID: <input type = "text" name = "iSid"/></p>
+		Date Created</br>(DD/MM/YYYY hh:mm:ss) : <input type = "text" name = "iDate"/></p>
+		Description: <input type = "text" name = "iDesc"/></p>
 
 		<h3>Upload a File</h3><p>
 	<label for "file">File to upload:</label>
