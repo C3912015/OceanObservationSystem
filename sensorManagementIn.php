@@ -1,11 +1,14 @@
-<?php session_start(); ?>
+<?php 
+session_name('Login');
+session_start(); ?>
 <html>
    <body>.
      <?php if($_SESSION['role']!='a'){
-	header("Location: ../Login/login.php");
+	header("Location: login.php");
+	exit;
      } ?>
      <?php
-	include("../../PHPconnectionDB.php");
+	include("PHPconnectionDB.php");
 	$conn = connect();
 	?>
      <!-- Check if Sys Admin -->
@@ -20,7 +23,7 @@
         <select>
 
 	<?php
-	/* Add drop down menu
+	/* Add drop down menu - incomplete
 	   $sqlSensorExist = "select * from sensors 
 				where sensor_id = {$sensor_ID}";
            $sensorExist = oci_parse($conn, $sqlSensorExist);
@@ -48,7 +51,7 @@
 	<input type = "submit" name = "AddSensor" value = "Add Sensor"/>
 
 	</form>
-	<a href = "../Login/login.php">Go Back</a>
+	<a href = "login.php">Back to Main Page</a>
    </body>
 </html>
 	

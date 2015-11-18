@@ -1,13 +1,16 @@
 <!-- Add/Remove Sensor -->
-<?php session_start();?>
+<?php 
+session_name('Login');
+session_start();?>
 <?php if($_SESSION['role']!='a'){
-	header("Location: ../Login/login.php");
+	header("Location: login.php");
+	exit;
 } ?>
 <html>
   <body>
     <?php
        //connection function
-       include("../../PHPconnectionDB.php");
+       include("PHPconnectionDB.php");
 
        //establish connection
        $conn = connect();
@@ -84,7 +87,7 @@
          if($_POST['ASensorID'] != NULL){ $sensor_ID = $_POST['ASensorID']; 
          } else { 
             echo 'No sensor ID given'; 
-            echo '<p><a href="../UserManagement/sensorManagementIn.php">Go Back</a>';
+            echo '<p><a href="sensorManagementIn.php">Go Back</a>';
             exit;
          }
          $location = $_POST['sLocation'];
@@ -98,9 +101,10 @@
          $res = oci_execute($addSensor);
        }
        echo
-       '<p><a href="../UserManagement/sensorManagementIn.php">Go
+       '<p><a href="sensorManagementIn.php">Go
        Back</a>';
        oci_close($conn);
     ?>
+    <p><a href="Login.php">Back to Main Page</a>';
   </body>
 </html>
