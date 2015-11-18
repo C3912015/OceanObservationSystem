@@ -105,6 +105,6 @@ session_start();?>
        Back</a>';
        oci_close($conn);
     ?>
-    <p><a href="Login.php">Back to Main Page</a>';
+    <p><a href="login.php">Back to Main Page</a>
   </body>
 </html>

@@ -1,10 +1,13 @@
-<?php session_start();?>
+<?php 
+session_name('Login');
+session_start();?>
 <html>
   <body>
      <!-- Check if Sys Admin -->
      <!-- Add/Delete/Update users and persons -->
      <?php if($_SESSION['role']!='a'){
-	header("Location: ../Login/login.php");
+	header("Location:login.php");
+	exit;
      } ?>
      <h2>User Account Management</h2>
      <h4><u>Add User</h4></u></p>
@@ -125,5 +128,7 @@
 	</table>
         <input type = "submit" name = "updatePerson" value = "Update Person" >
 	</form>
+
+</p><a href = "login.php">Back to Main Page</a>
   </body>
 </html>

@@ -8,15 +8,18 @@ Sys Admin can:
 Add/Update/Remove User/Person
 -->
 <!-- start session -->
-<?php session_start();?>
+<?php 
+session_name('Login');
+session_start();?>
 <?php if($_SESSION['role']!='a'){
-	header("Location: ../Login/login.php");
+	header("Location:login.php");
+	exit;
 } ?>
 <html>
   <body>
     <?php
        //connection function
-       include("../../PHPconnectionDB.php");
+       include("PHPconnectionDB.php");
 
        // if user is admin
 
@@ -61,7 +64,7 @@ Add/Update/Remove User/Person
          if($_POST['userNameA'] != NULL){ $user_ID = $_POST['userNameA']; 
          } else { 
             echo 'No username given'; 
-            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="usermanagementIn.php">Go Back</a>';
             exit;
         }
         $password = $_POST['userPWA'];
@@ -86,7 +89,7 @@ Add/Update/Remove User/Person
          if($_POST['userNameU'] != NULL){ $user_ID = $_POST['userNameU']; 
          } else { 
             echo 'No username given'; 
-            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -139,7 +142,7 @@ Add/Update/Remove User/Person
          	if($_POST['personIDA'] != NULL){ $user_ID = $_POST['personIDA']; 
          } else { 
             echo 'No person ID given'; 
-            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -211,7 +214,7 @@ Add/Update/Remove User/Person
          if($_POST['personIDU'] != NULL){ $user_ID = $_POST['personIDU']; 
          } else { 
             echo 'No person ID given'; 
-            echo '<p><a href="../UserManagement/usermanagementIn.php">Go Back</a>';
+            echo '<p><a href="usermanagementIn.php">Go Back</a>';
             exit;
         }
 
@@ -257,9 +260,11 @@ Add/Update/Remove User/Person
        }
 
        echo
-       '<p><a href="../UserManagement/usermanagementIn.php">Go
+       '<p><a href="usermanagementIn.php">Go
        Back</a>';
        oci_close($conn);
     ?>
+<p><a href="login.php">Back to Main Page</a>
+
   </body>
 </html>
