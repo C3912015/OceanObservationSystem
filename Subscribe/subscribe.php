@@ -14,6 +14,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 	session_start();
 	$pid = $_SESSION['pid'];
 ?>
+
 <?php 
 	if ($pid == ''){
 		header("Location: ../Login/login.php");
@@ -27,10 +28,10 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 	<link rel="stylesheet" href="CSS/subscribe.css" type="text/css">
 	</head>
 	<body>
-
-		<title>Subscriptions</title>
+	<title>Subscriptions</title>
         <h1>Subscription Module</h1>
-		<h2>List of Sensors:</h2>
+
+	<h2>List of Sensors:</h2>
 		<?php
 			/*Shows all the sensor data*/
 			include("../PHPconnectionDB.php");
@@ -56,7 +57,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			//Display results
 			$count = 0;
 			echo "<table>";
-		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+		    	while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
 				foreach ($row as $item) {
 					echo $item.'&nbsp;';
 				}
@@ -67,7 +68,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 					echo '</table><br/>';
 					}
 				$count += 1;
-		    }
+		   	 }
 
 			// Free the statement identifier when closing the connection
 			oci_free_statement($stid);
@@ -101,7 +102,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			//Display results
 			$count = 0;
 			echo "<table>";
-		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+		    	while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
 				foreach ($row as $item) {
 					echo $item.'&nbsp;';
 				}
@@ -112,7 +113,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 					echo '</table><br/>';
 					}
 				$count += 1;
-		    }
+		   	}
 
 			// Free the statement identifier when closing the connection
 			oci_free_statement($stid);
@@ -156,14 +157,15 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			}
 		?>
 		
-			<!--Remove a Subscription-->
-			<h2>Remove a Subscription</h2>
-         		<form name="Subscriptions" method="post" action="subscribe.php">
-				Sensor ID: 
-           		<input type="text" name = "removeSensor">
-				</br></br>
-				<input type = "submit" value="Remove Subscription">
-         		</form>
+		<!--Remove a Subscription-->
+		<h2>Remove a Subscription</h2>
+         	<form name="Subscriptions" method="post" action="subscribe.php">
+		      Sensor ID: 
+           	      <input type="text" name = "removeSensor">
+		      </br></br>
+		      <input type = "submit" value="Remove Subscription">
+         	</form>
+
 		<?php
 			/*Display Table with removed subscription*/
 			
@@ -179,8 +181,8 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			
 				//sql collect all values from sensors
 				$sql = "DELETE FROM subscriptions 
-						WHERE person_id = $pid 
-						AND sensor_id = ({$removeSensor})";
+					WHERE person_id = $pid 
+					AND sensor_id = ({$removeSensor})";
 
 				/*Prepare sql using conn and returns the 
 				statement identifier*/
