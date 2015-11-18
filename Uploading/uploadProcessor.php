@@ -70,6 +70,7 @@ $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
 	//images (image_id, sensor_id, date_created , 			recorded_data, thumbnail, description)
 	elseif($ext == "jpg"){
     		echo "JPG";
+
 	}
 	//If audio .wav
 	//audio_recordings (recording_id, sensor_id, date_created, 	length, recorded_data, description)
