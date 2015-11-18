@@ -11,12 +11,14 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 
 <?php 
 	//Start session to get user id	
+	session_name('Login');
 	session_start();
-	$pid = $_SESSION['pid'];
 ?>
 
 <?php 
-	if ($pid == ''){
+	$usr = $_SESSION['usr'];
+	$role = $_SESSION['role'];
+	if ($usr == '' or $role != 's'){
 		header("Location: ../Login/login.php");
 		exit;
 	}
@@ -81,6 +83,8 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			//establish connection
 			$conn = connect();
 			
+			//person id			
+			$pid = $_SESSION['pid'];
 			//sql collect all values from sensors
 			$sql = "SELECT * FROM sensors s, subscriptions sc
 					WHERE s.sensor_id = sc.sensor_id
@@ -199,6 +203,16 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 				}
 				header("Refresh:0");
 			} 
+		?>
+
+       <!--Return to main page-->
+        <p><a href="?main">Back to Main page</a></p>
+
+        <?php
+		if(isset($_GET['main'])){
+	   		header("Location: ../Login/login.php");
+	    	exit;
+		}
 		?>
 	</body>
 </html>		
