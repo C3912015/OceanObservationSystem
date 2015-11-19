@@ -108,5 +108,10 @@ CREATE TABLE scalar_data(
 ) tablespace c391ware;
 */
 
+INSERT INTO scalar_data VALUES(1,10,TO_DATE('2014-07-08','YYYY-MM-DD'), 1.2);
+INSERT INTO scalar_data VALUES(2,11,TO_DATE('2013-01-11','YYYY-MM-DD'), 2.7);
+INSERT INTO scalar_data VALUES(3,12,TO_DATE('2011-12-01','YYYY-MM-DD'), 11.2);
+INSERT INTO scalar_data VALUES(4,13,TO_DATE('2010-04-20','YYYY-MM-DD'), 4.55);
+
 commit;
 

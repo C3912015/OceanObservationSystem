@@ -147,7 +147,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 
 				//Execute a statement returned from oci_parse()
 				
-				if($res = oci_execute($stid)){
+				if(@$res = oci_execute($stid)){
 					header("Refresh:0");
 				}
 
@@ -196,16 +196,18 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 				$stid = oci_parse($conn, $sql);
 
 				//Execute a statement returned from oci_parse()
-				$res = oci_execute($stid);
+				if(@$res = oci_execute($stid)){
+					header("Refresh:0");
+				}
 
 				/*if error, retrieve the error using the oci_error() 
 				function & output an error*/
-				if (!$res) {
-					$err = oci_error($stid);
+				else {
+					//$err = oci_error($stid);
 					//echo htmlentities($err['message']);
 					echo "Invalid Subscription ID";
 				}
-				header("Refresh:0");
+				
 			} 
 		?>
 
