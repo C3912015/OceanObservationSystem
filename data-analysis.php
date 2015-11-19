@@ -19,8 +19,9 @@
 		$conn = connect();
 
 		//sql collect all values from sensors
-		$sql = "SELECT DATEPART(yyyy,date_created) AS OrderYear
-				FROM scalar_data";
+		$sql = "SELECT sensor_id, date_created, avg(value), min(value), max(value)
+				FROM scalar_data
+				GROUP BY ROLLUP(sensor_id, date_created)";
 
 		//Prepare sql using conn and returns the statement identifier
 		$stid = oci_parse($conn, $sql);
