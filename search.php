@@ -35,7 +35,6 @@
 	}
 
         if(isset($_POST['search'])){
-            //TODO escape input
             $keywords = $_POST['keywords'];
             $sensor_info = $_POST['sensor_info'];
             $time_begin = $_POST['time_begin'];
@@ -46,17 +45,12 @@
             $keyword_array = explode(" ", $keywords);
             $sensor_info_array = explode(" ", $sensor_info);
 
-            //$begin = new DateTime($time_begin);
-            //$end = new DateTime($time_end);
-            //$end = $end->modify('+1 day');
-            //$interval = new DateInterval('P1D');
-            //$daterange = new DatePeriod($begin, $interval ,$end);
             //TODO date form error handling
 
             //testing
-            foreach($keyword_array as $value){
+            /*foreach($keyword_array as $value){
                 echo $value. "<br>";
-            }
+            }*/
 
             //Sensor location and type query
             $sensor_query = " ";
@@ -68,13 +62,13 @@
                 case "a":
                     $sensor_type_array[] = $value;
                     break;
-                case "a":
+                case "i":
                     $sensor_type_array[] = $value;
                     break;
-                case "a":
+                case "t":
                     $sensor_type_array[] = $value;
                     break;
-                case "a":
+                case "o":
                     $sensor_type_array[] = $value;
                     break;
                 default:
@@ -84,15 +78,17 @@
             }
 
             $i = 0;
+
             if(!empty($sensor_type_array)){
                 foreach($sensor_type_array as $value){
                     if($i==0){
                         $i++;
-                        $sensor_query .= " AND sensor_type = {$value}";
+                        $sensor_query .= " AND (s.sensor_type = '{$value}'";
                     }
                     else
-                        $sensor_query .= " OR sensor_type = {$value}";
+                        $sensor_query .= " OR s.sensor_type = '{$value}'";
                 }
+                $sensor_query .= ") ";
             }
 
             $i = 0;
@@ -100,33 +96,21 @@
                 foreach($sensor_location_array as $value){
                     if($i==0){
                         $i++;
-                        $sensor_query .= " AND location = {$value}";
+                        $sensor_query .= " AND (location = '{$value}'";
                     }
                     else
-                        $sensor_query .= " OR location = {$value}";
+                        $sensor_query .= " OR location = '{$value}'";
                 }
+                $sensor_query .= ") ";
             }
 
-            
-            /*foreach($daterange as $date){
-                echo $date->format("Ymd") . "<br>";
-            }*/
             //TODO date form error handling (check blank)
 
             
-            $subscription_query = "s.sensor_id = sc.sensor_id AND sc.person_id = {$pid} ";
+            $subscription_query = "sc.sensor_id = s.sensor_id AND sc.person_id = {$pid} ";
+            //$subscription_query .= " AND (sc.sensor_id = a.sensor_id AND sc.sensor_id = i.sensor_id AND sc.sensor_id = sd.sensor_id)";
+
  
-            //Date query
-           // $begin =
-           /* $temp = explode("/", $time_end);
-            //$time_end_day = intval($temp[1])+1;
-             function inc($matches) {
-                 return ++$matches[1];
-             }
-            $time_end_day = preg_replace_callback( "|(\d+)|", "inc", $temp[1]);
-            $time_end = "{$temp[0]}/{$time_end_day}/{$temp[2]}";
-*/
-            //$pattern = "/^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/";
             $pattern = "/^[0-9]{4}\/[0-9]{1,2}\/[0-9]{1,2}$/";
             if(!preg_match($pattern, $time_begin, $matches)){
                 header("Location: login.php");
@@ -138,12 +122,15 @@
             }
             $time_end = strtotime($time_end);
             $time_end = strtotime("+1 day", $time_end);
-            $time_end = date('y/m/d', $time_end);
+            $time_end = date('d-M-y', $time_end);
+            $time_begin = strtotime($time_begin);
+            $time_begin = date('d-M-y', $time_begin);
 
-            $date_query = " AND (a.date_created >= '{$time_begin}' AND a.date_created < '{$time_end}')";
+
+            $date_query = " AND ((a.date_created >= '{$time_begin}' AND a.date_created < '{$time_end}')";
             $date_query .= " OR (i.date_created >= '{$time_begin}' AND i.date_created < '{$time_end}')";
-            $date_query .= " OR (sd.date_created >= '{$time_begin}' AND sd.date_created < '{$time_end}')";
-           /* $date_query = " AND date_created BETWEEN '".$begin->format("Ymd")."' AND '".$end->format("Ymd")."' ";*/
+            $date_query .= " OR (sd.date_created >= '{$time_begin}' AND sd.date_created < '{$time_end}'))";
+
 
 
             //Keyword query
@@ -157,9 +144,36 @@
             }
 
             $query = $subscription_query.$sensor_query.$date_query.$query;
-            $sql = " SELECT * FROM SEARCH_ENGINE WHERE $query ";
+            //$query = $subscription_query.$sensor_query.$query;
+            //$sql = " SELECT * FROM sensors s, subscriptions sc, audio_recordings a, images i, scalar_data sd WHERE $query ";
+            $sql = " SELECT * 
+                     FROM (((sensors s join audio_recordings a on s.sensor_id = a.sensor_id)
+                                       join images i on s.sensor_id = i.sensor_id) 
+                                       join scalar_data sd on s.sensor_id = sd.sensor_id), subscriptions sc 
+                     WHERE $query ";
             echo $sql;
+            
+            include("./PHPconnectionDB.php");
+            $conn = connect();
+            $stid = oci_parse($conn, $sql );
+            $res=oci_execute($stid);
 
+            if(!$res){
+	        $err = oci_error($stid);
+	        echo htmlentities($err['message']);
+                oci_close($conn);
+                exit;
+            }
+             //echo "hello";
+            while($row = oci_fetch_array($stid, OCI_ASSOC + OCI_RETURN_NULLS)){
+                foreach ($row as $item){
+                    echo "<br>";
+                    echo $item;
+                    //echo "item";
+                }
+            
+            }
+            oci_close($conn);
         }
         ?>
 	
