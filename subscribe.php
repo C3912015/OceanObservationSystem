@@ -13,9 +13,6 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 	//Start session to get user id	
 	session_name('Login');
 	session_start();
-?>
-
-<?php 
 	$usr = $_SESSION['usr'];
 	$role = $_SESSION['role'];
 	if ($usr == '' or $role != 's'){
