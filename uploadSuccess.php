@@ -20,6 +20,9 @@
         <div id="Upload"> 
             <h1>File upload</h1> 
             <p>Congratulations! Your file upload was successful</p> 
+		<a href = "upload.php">Go back</a></p>
+		<a href = "login.php">Back to Main Page</a>
+		
         </div> 
      
     </body> 
