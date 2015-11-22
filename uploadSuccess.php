@@ -1,6 +1,8 @@
 <!-- http://www.htmlgoodies.com/beyond/php/article.php/3877766/Web-Developer-How-To-Upload-Images-Using-PHP.htm  -->
 
-<?php session_start(); ?>
+<?php 
+session_name('Login');
+session_start(); ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
 "http://www.w3.org/TR/html4/strict.dtd"> 
