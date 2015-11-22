@@ -8,7 +8,9 @@ Curator can:
 -->
 <!-- http://www.htmlgoodies.com/beyond/php/article.php/3877766/Web-Developer-How-To-Upload-Images-Using-PHP.htm -->
 
-<?php session_start(); ?>
+<?php 
+session_name('Login');
+session_start(); ?>
     <?php
 	//current working directory
     	$directory_self  = str_replace(basename($_SERVER['PHP_SELF']), '',$_SERVER['PHP_SELF']);
