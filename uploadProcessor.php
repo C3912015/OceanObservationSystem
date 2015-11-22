@@ -3,7 +3,9 @@ http://stackoverflow.com/questions/10456113/php-check-file-extension-in-upload-f
 https://github.com/saemorris/TheRadSystem/blob/master/uploadProcessor.php
 -->
 
-<?php session_start(); ?>
+<?php 
+session_name('Login');
+session_start(); ?>
 <?php 
 	//add check for right sensor type
 	//connection function	
