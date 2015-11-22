@@ -38,6 +38,7 @@
 		$sensor = 0;
 		$choice = "year";
 		
+		/* CUBE data */
 		if (isset($_POST['Cube'])){
 			$sensor = $_POST['sensor'];
 			echo "<h2>Cube Analysis</h2>";

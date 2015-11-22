@@ -40,17 +40,17 @@ CREATE TABLE users (
  * To store sensor info
  * sensor_type: 'a'->audio recorder
  * sensor_type: 'i'->image recorder
- * sensor_type: 't'->text recorder
- * sensor_type: 'o'->other
+ * sensor_type: 's'->scalar value recorder
  */
 
 CREATE TABLE sensors(
-	sensor_id  		int,
-	location   		varchar(64),
-	sensor_type  	char(1),
-	description  	varchar(128),
-	CHECK(sensor_type in ('a', 'i', 't', 'o')),
-	PRIMARY KEY(sensor_id)) tablespace c391ware;
+    sensor_id    int,
+    location     varchar(64),
+    sensor_type  char(1),
+    description  varchar(128),
+    CHECK(sensor_type in ('a', 'i', 's')),
+    PRIMARY KEY(sensor_id)
+) tablespace c391ware;
 
 /*
  * subscription relations
@@ -72,9 +72,9 @@ CREATE TABLE audio_recordings(
     recording_id int,
     sensor_id int,
     date_created date,
-    length int, /*seconds*/
+    length int,
     description varchar(128),
-    recorded_data blob,/*Take a wav file and insert it as a blob*/
+    recorded_data blob,
     PRIMARY KEY(recording_id),
     FOREIGN KEY(sensor_id) REFERENCES sensors
 ) tablespace c391ware;
@@ -82,7 +82,7 @@ CREATE TABLE audio_recordings(
 /*
  * image
  */
-/*image and sound not hourly date. Image should have a thumbnail and download button*/
+
 CREATE TABLE images(
     image_id int,
     sensor_id int,
@@ -101,12 +101,10 @@ CREATE TABLE images(
 CREATE TABLE scalar_data(
     id int,
     sensor_id int,
-    date_created date, /* date here should be hourly*/
+    date_created date,
     value float,
     PRIMARY KEY(id),
     FOREIGN KEY(sensor_id) REFERENCES sensors
 ) tablespace c391ware;
 
 commit;
-
-/*All the files will be empty, make sure to put the admin in the user table. (Take login and password, look in user table. If there is nothing there, it will get stuck on this, so make sure in your .sql file you insert admin to start it off. Must have different interfaces for users vs admin*/

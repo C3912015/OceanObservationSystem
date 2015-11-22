@@ -51,8 +51,8 @@ CREATE TABLE sensors(
 */
 INSERT INTO sensors VALUES(10,'Hogwarts','a', 'this is a description');
 INSERT INTO sensors VALUES(11,'Canada','i', 'this is a description');
-INSERT INTO sensors VALUES(12,'Austalia','t', 'this is a description');
-INSERT INTO sensors VALUES(13,'Ocean','o', 'this is a description');
+INSERT INTO sensors VALUES(12,'Austalia','s', 'this is a description');
+INSERT INTO sensors VALUES(13,'Ocean','i', 'this is a description');
 
 /*Data for subscriptions*/
 

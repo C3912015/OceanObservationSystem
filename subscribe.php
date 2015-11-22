@@ -51,20 +51,21 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			}
 
 			//Display results
-			$count = 0;
-			echo "<table>";
-		    	while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+			echo "<table border='1' cellspacing=1 width=\"50%\">";
+			echo "<tr>";
+			echo "<th>Sensor ID</th>";
+			echo "<th>Location</th>";
+			echo "<th>Sensor Type</th>";
+			echo "<th>Description</th>";
+			echo "</tr>";
+		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+				echo "<tr>";
 				foreach ($row as $item) {
-					echo $item.'&nbsp;';
+					echo "<td align = 'center'>".$item."</td>\n";
 				}
-				if ($count == 0) {
-					echo '</table>';
-				}
-				else {
-					echo '</table><br/>';
-					}
-				$count += 1;
+				echo '</tr>';
 		   	 }
+			echo "</table>";
 
 			// Free the statement identifier when closing the connection
 			oci_free_statement($stid);
@@ -99,19 +100,20 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 
 			//Display results
 			$count = 0;
-			echo "<table>";
+			echo "<tr>";
 		    	while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
 				foreach ($row as $item) {
-					echo $item.'&nbsp;';
+					echo "<td>".$item.'&nbsp;'."</td>\n";
 				}
 				if ($count == 0) {
-					echo '</table>';
+					echo '</tr>';
 				}
 				else {
-					echo '</table><br/>';
+					echo '</tr><br/>';
 					}
 				$count += 1;
 		   	}
+			echo "</table>";
 
 			// Free the statement identifier when closing the connection
 			oci_free_statement($stid);
