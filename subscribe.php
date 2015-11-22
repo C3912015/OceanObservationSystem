@@ -27,7 +27,7 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 	<title>Subscriptions</title>
         <h1>Subscription Module</h1>
 
-	<h2>List of Sensors:</h2>
+	<h2>All Sensors:</h2>
 		<?php
 			/*Shows all the sensor data*/
 			include("PHPconnectionDB.php");
@@ -71,9 +71,10 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			oci_free_statement($stid);
 			oci_close($conn);
 		?>
-			<!--User Subscriptions-->
-			<h2>List of User's Sensors:</h2>
+
 		<?php
+			//User Subscriptions
+			echo "<h2>Subscribed Sensors:</h2>";
 			/*Shows user sensor data*/
 			//establish connection
 			$conn = connect();
@@ -81,7 +82,8 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			//person id			
 			$pid = $_SESSION['pid'];
 			//sql collect all values from sensors
-			$sql = "SELECT * FROM sensors s, subscriptions sc
+			$sql = "SELECT s.sensor_id, s.location, s.sensor_type, s.description 
+					FROM sensors s, subscriptions sc
 					WHERE s.sensor_id = sc.sensor_id
 					AND sc.person_id = {$pid}";
 
@@ -99,19 +101,19 @@ Refresh page: http://stackoverflow.com/questions/12383371/refresh-a-page-using-p
 			}
 
 			//Display results
-			$count = 0;
+			echo "<table border='1' cellspacing=1 width=\"50%\">";
 			echo "<tr>";
-		    	while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
+			echo "<th>Sensor ID</th>";
+			echo "<th>Location</th>";
+			echo "<th>Sensor Type</th>";
+			echo "<th>Description</th>";
+			echo "</tr>";
+			echo "<tr>";
+		    while ($row = oci_fetch_array($stid, OCI_ASSOC)) {
 				foreach ($row as $item) {
-					echo "<td>".$item.'&nbsp;'."</td>\n";
+					echo "<td align = 'center'>".$item.'&nbsp;'."</td>\n";
 				}
-				if ($count == 0) {
-					echo '</tr>';
-				}
-				else {
-					echo '</tr><br/>';
-					}
-				$count += 1;
+				echo '</tr>';
 		   	}
 			echo "</table>";
 
