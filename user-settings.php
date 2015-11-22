@@ -27,6 +27,7 @@
             if(!$res){
 	        $err = oci_error($stid);
 	        //echo htmlentities($err['message']);
+                oci_free_statement($stid);
                 oci_close($conn);
                 header("Location: login.php");
                 exit;
@@ -38,6 +39,7 @@
             $address = oci_result($stid, 'ADDRESS');
             $email = oci_result($stid, 'EMAIL');
             $phone = oci_result($stid, 'PHONE');
+            oci_free_statement($stid);
             oci_close($conn);
             
 	?>
@@ -55,7 +57,7 @@
         <!--Return to main page-->
         <p><a href="?main">Back to Main page</a></p>
 
-        <!--Closing the IF-ELSE construct-->
+    <!--Closing the IF-ELSE construct-->
 	<?php endif;?>
 
 
@@ -82,11 +84,13 @@
             if(!$res){
 	        $err = oci_error($stid);
 	        echo htmlentities($err['message']);
+                oci_free_statement($stid);
                 oci_close($conn);
                 header("Location: login.php");
                 exit;
             }
             oci_commit($conn);
+            oci_free_statement($stid);
             oci_close($conn);
             header("Location: user-settings.php");
             exit;

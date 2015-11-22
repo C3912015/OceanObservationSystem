@@ -54,7 +54,7 @@
             <input type="text" name="keywords"/>Keyword(s)<br/>
             <input type="text" name="sensor_info"/>Sensor Type and/or Location<br/>
             <input type="text" name="time_begin" value="From"/>-<input type="text" name="time_end"
- value="To"/>Time Period (YYYY-MM-DD)<br/>
+ value="To"/>Time Period (YYYY/MM/DD)<br/>
             <input type="submit" name="search" value="Search"/>
         </form>
 
@@ -115,6 +115,7 @@
 	            //$ocierr = oci_error($stid);
                     $err[]=oci_error($stid);
 	            //echo htmlentities($err['message']);
+                    oci_free_statement($stid);
                     oci_close($conn);
                     header("Location: login.php");
                     exit;
@@ -139,7 +140,7 @@
                 //Save the error messages in the session
                 unset($_SESSION['msg']['login-err']);
 	        $_SESSION['msg']['login-err'] = implode('<br />',$err);
-
+            oci_free_statement($stid);
             oci_close($conn);
 	    header("Location: login.php");
 	    exit;
