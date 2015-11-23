@@ -52,7 +52,7 @@ session_start();?>
 		
 
 		// remove from images
-		$sqlDELimages = "DELETE FROM sensors 
+		$sqlDELimages = "DELETE FROM images 
 			WHERE sensor_id={$sensor_ID}";
                 $rmSensor = oci_parse($conn, $sqlDELimages);
 		if($res = oci_execute($rmSensor)){
@@ -60,7 +60,7 @@ session_start();?>
 		}
 
 		// remove from scalar_data
-		$sqlDELscalar = "DELETE FROM sensors 
+		$sqlDELscalar = "DELETE FROM scalar_data 
 			WHERE sensor_id={$sensor_ID}";
                 $rmSensor = oci_parse($conn, $sqlDELscalar);
 		if($res = oci_execute($rmSensor)){
