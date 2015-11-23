@@ -35,12 +35,12 @@ session_start(); ?>
 	<form id = "Upload" action = "uploadProcessor.php" enctype = "multipart/form-data" method = "post">
 	<h2>Audio Information</h2>
 		Sensor ID: <input type = "text" name = "aSid"/> </p>
-		Date Created</br>(DD/MM/YYYY): <input type = "text" name = "aDate"/></p>
+		Date Created</br>(DD/MM/YYYY hh:mm:ss): <input type = "text" name = "aDate"/></p>
 		Length: <input type = "text" name = "aLength"/></p>
 		Description: <input type = "text" name = "aDesc"/><p>
 		<h2>Image Information</h2>
 		Sensor ID: <input type = "text" name = "iSid"/></p>
-		Date Created</br>(DD/MM/YYYY) : <input type = "text" name = "iDate"/></p>
+		Date Created</br>(DD/MM/YYYY hh:mm:ss) : <input type = "text" name = "iDate"/></p>
 		Description: <input type = "text" name = "iDesc"/></p>
 		
 		<h3>Upload a File - jpg, wav, or csv </h3><p>

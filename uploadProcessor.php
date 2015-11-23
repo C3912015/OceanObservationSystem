@@ -142,7 +142,7 @@ $ext = strtolower($ext);
 		$image_lob = oci_new_descriptor($conn, OCI_D_LOB);
 		$thumbnail_lob = oci_new_descriptor($conn, OCI_D_LOB);
 		
-		$sql= "INSERT INTO images (image_id, sensor_id, date_created , 			recoreded_data, thumbnail, description) VALUES({$now}, {$sensor_id}, TO_DATE('{$date}','DD/MM/YYYY'), EMPTY_BLOB(), EMPTY_BLOB(), '{$desc}') RETURNING recoreded_data, thumbnail INTO :image, :thumbnail";
+		$sql= "INSERT INTO images (image_id, sensor_id, date_created , 			recoreded_data, thumbnail, description) VALUES({$now}, {$sensor_id}, TO_DATE('{$date}','DD/MM/YYYY HH24:MI:SS'), EMPTY_BLOB(), EMPTY_BLOB(), '{$desc}') RETURNING recoreded_data, thumbnail INTO :image, :thumbnail";
 
 		echo $sql;
 		$stmt = oci_parse($conn, $sql);
@@ -170,6 +170,7 @@ $ext = strtolower($ext);
 		oci_close($conn);
 
 		//test display image
+		/*
 		$connTest = connect();
 		$query = "SELECT * FROM images WHERE image_id=1448225214";
 		$stmt = oci_parse($connTest, $query);
@@ -182,7 +183,7 @@ $ext = strtolower($ext);
 		//header('Content-disposition: attachment;filename=test.jpeg');
 	    header("Content-Type: image/jpeg");
             echo $thumb->load();
-    }
+    }*/
 		//header('Content-type:image/jpg');
 		//readfile($fullpath);
 		
@@ -201,7 +202,7 @@ $ext = strtolower($ext);
 		//query
 		$conn = connect();
 		$wav_lob = oci_new_descriptor($conn, OCI_D_LOB);
-		$sqlAudio= "INSERT INTO audio_recordings (recording_id, sensor_id, date_created , 			length, description, recorded_data) VALUES({$now}, {$sensor_id}, TO_DATE('{$date}','DD/MM/YYYY'), {$len}, '{$desc}', EMPTY_BLOB()) RETURNING recorded_data INTO :wav";
+		$sqlAudio= "INSERT INTO audio_recordings (recording_id, sensor_id, date_created , 			length, description, recorded_data) VALUES({$now}, {$sensor_id}, TO_DATE('{$date}','DD/MM/YYYY HH24:MI:SS'), {$len}, '{$desc}', EMPTY_BLOB()) RETURNING recorded_data INTO :wav";
 		echo $sql;
 		$stmtA = oci_parse($conn, $sqlAudio);
 		oci_bind_by_name($stmtA, ":wav", $wav_lob,-1, OCI_B_BLOB);
