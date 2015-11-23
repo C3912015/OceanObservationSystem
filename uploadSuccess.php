@@ -4,6 +4,11 @@
 session_name('Login');
 session_start(); ?>
 
+<?php if($_SESSION['role']!='d'){
+      header("Location:login.php");
+      exit;
+} ?>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" 
 "http://www.w3.org/TR/html4/strict.dtd"> 
 
@@ -22,7 +27,7 @@ session_start(); ?>
         <div id="Upload"> 
             <h1>File upload</h1> 
             <p>Congratulations! Your file upload was successful</p> 
-		<a href = "upload.php">Go back</a></p>
+		<a href = "upload.php">Upload more data!</a></p>
 		<a href = "login.php">Back to Main Page</a>
 		
         </div> 

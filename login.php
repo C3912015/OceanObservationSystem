@@ -41,6 +41,8 @@
         <!--Data curator-->
         <?php if($_SESSION['role']=='d'):?>
             <!--insert curator links here-->
+	    <a href = "upload.php">Upload Data</a><br>
+	    
         <?php endif;?>
 
         <!--Scientist-->

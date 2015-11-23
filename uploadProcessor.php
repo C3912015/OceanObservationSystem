@@ -6,6 +6,14 @@ https://github.com/saemorris/TheRadSystem/blob/master/uploadProcessor.php
 <?php 
 session_name('Login');
 session_start(); ?>
+
+<?php if($_SESSION['role']!='d'){
+      header("Location:login.php");
+      exit;
+} ?>
+
+<html>
+<body>
 <?php 
 	//add check for right sensor type
 	//connection function	
@@ -162,15 +170,21 @@ $ext = strtolower($ext);
 		oci_close($conn);
 
 		//test display image
-		/*
 		$connTest = connect();
-		$query = "SELECT * FROM images";
+		$query = "SELECT * FROM images WHERE image_id=1448225214";
 		$stmt = oci_parse($connTest, $query);
 		$res = oci_execute($stmt, OCI_DEFAULT);
-		echo "<img src={$res}>";
+    if($res){
+        $row = oci_fetch_row($stmt);
+		$thumb = OCIResult($stmt, "thumbnail");
+		echo $thumb;
+		//header('Content-type: application/octet-stream;');
+		//header('Content-disposition: attachment;filename=test.jpeg');
+	    header("Content-Type: image/jpeg");
+            echo $thumb->load();
+    }
 		//header('Content-type:image/jpg');
 		//readfile($fullpath);
-		*/
 		
 	}
 	//If audio .wav
@@ -214,7 +228,7 @@ $ext = strtolower($ext);
 
 // If you got this far, everything has worked and the file has been successfully saved. 
 // We are now going to redirect the client to a success page. 
-//header('Location: ' . $uploadSuccess); 
+header('Location: ' . $uploadSuccess); 
 
 
 function error($error, $location, $seconds = 5) 
@@ -240,3 +254,6 @@ function error($error, $location, $seconds = 5)
 
 
 ?> 
+<a href="login.php">Back to Main Page</a>
+</body>
+</html>

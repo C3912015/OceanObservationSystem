@@ -11,6 +11,12 @@ Curator can:
 <?php 
 session_name('Login');
 session_start(); ?>
+
+<?php if($_SESSION['role']!='d'){
+      header("Location:login.php");
+      exit;
+} ?>
+
     <?php
 	//current working directory
     	$directory_self  = str_replace(basename($_SERVER['PHP_SELF']), '',$_SERVER['PHP_SELF']);
@@ -41,6 +47,9 @@ session_start(); ?>
 	<label for "file">File to upload:</label>
 	<input id = "file" type = "file" name = "file"></p>
 	<input id = "submit" type = "submit" name = "submit" value = "Upload"></p>
+
 	</form>
+
+<a href="login.php">Back to Main Page</a>
 	</body>
 </html>
