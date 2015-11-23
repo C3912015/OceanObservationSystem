@@ -249,10 +249,8 @@
 		$yearChar = (string)$year;
 		$quarterChar = (string)$quarter;
 		$quarterYear = $yearChar."-".$quarterChar; 
-		echo $quarterYear;
 		if ($quarter != 0){
 			$group = "to_char(sd.date_created, 'YYYY-Q')";
-			$query .= "AND to_char(sd.date_created, 'YYYY-Q') = to_char({$quarterYear})";
 			if ($month != 0){
 				$group = "extract(month from sd.date_created)";
 				$query .= "AND extract(month from sd.date_created) = {$month}";
