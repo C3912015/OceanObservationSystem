@@ -30,7 +30,7 @@ else:?>
                 $filename = $id;
                 header('Content-Type: image/jpeg');
                 header('Content-Disposition: attachment; filename="'.$filename.'.jpeg"');
-		echo $filedata;
+		        echo $filedata;
             }
         }
         else
