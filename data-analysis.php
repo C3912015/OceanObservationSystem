@@ -83,10 +83,10 @@
 	if (isset($_POST['RollUp'])){
 		$sensor1 = (int)($_POST['sensor1']);
 		echo "<h2>Rollup Analysis</h2>";
-
 		//establish connection
 		$conn = connect();
 		$pid = $_SESSION['pid'];
+
 		//extract datepart: 
 		//http://stackoverflow.com/questions/12155974/oracle-datepart-must-be-defined
 			
