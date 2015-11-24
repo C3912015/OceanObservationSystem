@@ -17,13 +17,16 @@ where root is the php servers url. From here you can login and navigate the diff
 The login module starts off by asking you to provide a Username and Password.
 You must have been provided access by an Administrator, and know both of these pieces of information. If you don't know them, contact the Admin of the server.
 Once signed in, you are greeted by a page with specialized options based on your clearance. The three levels are:
-1.	Adminstrator
+
+######1.	Adminstrator
 
 The Administrator can add new users and delete current users.
-2.	Data Curators
+
+######2.	Data Curators
 
 The data curator can upload sensor data including audio, images and scalar data.
-3.	Scientist
+
+#######3.	Scientist
 
 The scientist can subscribe and unsubscribe from sensors and also do data analysis on sensors they are subscribed to.
 
