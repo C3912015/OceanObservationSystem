@@ -26,7 +26,7 @@ The Administrator can add new users and delete current users.
 
 The data curator can upload sensor data including audio, images and scalar data.
 
-#######3.	Scientist
+######3.	Scientist
 
 The scientist can subscribe and unsubscribe from sensors and also do data analysis on sensors they are subscribed to.
 
