@@ -109,7 +109,6 @@
 	    if(!count($err)){
                 include("PHPconnectionDB.php");
                 $conn = connect();
-                //TODO Escaping all input data
                 $USER=$_POST['user'];            		
                 $USER_PASSWORD=$_POST['user_password'];  
 

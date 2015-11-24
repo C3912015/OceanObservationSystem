@@ -25,8 +25,6 @@
             $res=oci_execute($stid);
 
             if(!$res){
-	        $err = oci_error($stid);
-	        //echo htmlentities($err['message']);
                 oci_free_statement($stid);
                 oci_close($conn);
                 header("Location: login.php");
@@ -68,7 +66,6 @@
 	}
 
         if(isset($_POST['edit'])){
-            //TODO escape input
             $firstname = $_POST['firstname'];
             $lastname = $_POST['lastname'];
             $address = $_POST['address'];
