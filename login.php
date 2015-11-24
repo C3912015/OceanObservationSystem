@@ -64,9 +64,19 @@
         <!--Edit personal information-->
         <a href="./user-settings.php"> Change Personal Information</a>
 
+     	<!--Help Page-->
+     	<p><a href="?help">Help</a></p>
+
+    	<?php
+			if(isset($_GET['help'])){
+	   			header("Location: README.md");
+	    		exit;
+			}
+		?>
+
         <!--Log off-->
         <p><a href="?logoff">Log off</a></p>
-
+		
         <!--Closing the IF-ELSE construct-->
 	<?php endif;?>
      
@@ -148,6 +158,8 @@
 	    exit;
 	}
 	?>
+
+
 	<br/>
     </body>
 </html>

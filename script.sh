@@ -1,2 +1,2 @@
 #!/bin/bash
-chmod 664 *.php *.css
+chmod 664 *.php *.css *.md
