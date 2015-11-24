@@ -1,6 +1,17 @@
 # OceanObservationSystem
 
 ####Install
+Once downloaded from eclass, place the zip folder into the location of your PHP server and unzip.
+When it has been unzipped, navigate into the folder titled code and open a terminal here. Run:
+
+**script.sh**
+
+which will change the permissions of all the files in this folder.
+Once this is done, it can be accessed from a browser by going: 
+
+**root/login.php**
+
+where root is the php servers url. From here you can login and navigate the different pages.
 
 ####Login Module - James
 
