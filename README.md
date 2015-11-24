@@ -54,7 +54,6 @@ Note this will only work for scalar data, not images or audio.
 The specialization is obtained by entering a Sensor ID. From here you can choose how small you want to specialize the data to. 
 You start by selecting a year, and then a quarter, and so on, until you are at the time type you want. 
 Note that the times must decrease, and you cannot enter, for example, a day before entering a month. 
-
 When you have the appropriate time level, click the Specialization (Drill Down) button.
 This will display the Average, Maximum and Minimum respectivaley of your chosen sensor's scalar data.
 
