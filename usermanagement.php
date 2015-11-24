@@ -52,6 +52,7 @@ session_start();?>
                 $rmUser = oci_parse($conn, $sqlDEL);
 	        oci_bind_by_name($rmUser,":id",$user_ID);
                 $res = oci_execute($rmUser);
+                oci_commit($conn);
                 echo 'User removed';
              //user doesn't exist
              }else{echo "Unable to remove nonexistant user.";}
@@ -84,6 +85,7 @@ session_start();?>
 	 oci_bind_by_name($addUser,":rdate",$date);
 
          $res = oci_execute($addUser);
+         oci_commit($conn);
 
        } 
 
@@ -179,6 +181,7 @@ session_start();?>
 	 oci_bind_by_name($addPerson,":phone",$phone);
 
          $res = oci_execute($addPerson);
+         oci_commit($conn);
 	echo "Person added";
 
        } 
@@ -294,6 +297,7 @@ session_start();?>
 	 oci_bind_by_name($updateUser,":phone",$phone);
 
          $res = oci_execute($updateUser);
+         oci_commit($conn);
        }
 
        echo
