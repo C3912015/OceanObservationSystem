@@ -1,4 +1,4 @@
-# OceanObservationSystem
+# Ocean Observation System
 
 ####Install
 Once downloaded from eclass, place the zip folder into the location of your PHP server and unzip.
