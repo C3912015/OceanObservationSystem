@@ -69,7 +69,7 @@
 
     	<?php
 			if(isset($_GET['help'])){
-	   			header("Location: README.md");
+	   			header("Location: UserDocumentation.html");
 	    		exit;
 			}
 		?>
