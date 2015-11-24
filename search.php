@@ -60,10 +60,7 @@
                 case "i":
                     $sensor_type_array[] = $value;
                     break;
-                case "t":
-                    $sensor_type_array[] = $value;
-                    break;
-                case "o":
+                case "s":
                     $sensor_type_array[] = $value;
                     break;
                 default:
@@ -170,8 +167,7 @@
                      FROM sensors s, subscriptions sc, audio_recordings a
                      WHERE $query 
                      ORDER BY s.sensor_id";
-            echo "<br>";
-            echo $sql;
+
             $stid = oci_parse($conn, $sql);
 
             $res=oci_execute($stid);
@@ -282,9 +278,7 @@
                      FROM sensors s, subscriptions sc, scalar_data sd
                      WHERE $query 
                      ORDER BY s.sensor_id";
-            echo "<br>";
-            echo "<br>";
-            echo $sql;
+
             $stid = oci_parse($conn, $sql);
             $res=oci_execute($stid);
 

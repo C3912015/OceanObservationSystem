@@ -3,20 +3,18 @@
 session_name('Login');
 session_start();
 ?>
-<?php //If not logged in
+
+<?php
 if(!$_SESSION['id']):
         header("Location: login.php");
         exit;
 ?>
 
-<?php 
-//currently logged in
-else:?>
+<?php else:?>
 <?php 
     include("./PHPconnectionDB.php");
     $conn = connect();
     $id = $_GET['id'];
-
     $sql = "SELECT * FROM images WHERE image_id=:id";
     $stid = oci_parse($conn, $sql );
     oci_bind_by_name($stid, ':id', $id);
@@ -24,19 +22,16 @@ else:?>
     
     if($res){
         if($row = oci_fetch_assoc($stid)){
-            $filedata = $row['THUMBNAIL']->read($row['THUMBNAIL']->size());
-            $filename = $id;
+            $thumb = $row['THUMBNAIL']->read($row['THUMBNAIL']->size());
             header('Content-Type: image/jpeg');
-	        echo $filedata;
+            echo $thumb;
         }
     }
     else
         exit;
-
-    //oci_free_statement($stid);
+    oci_free_statement($stid);
     oci_close($conn);
 ?>
 
-<?php //closing the IF-ELSE construct 
-endif;?>
+<?php endif;?>
 
