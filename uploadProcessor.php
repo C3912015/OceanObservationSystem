@@ -107,7 +107,7 @@ $ext = strtolower($ext);
 	}
 	//If image .jpg
 	//images (image_id, sensor_id, date_created , 			recorded_data, thumbnail, description)
-	elseif($ext == "jpg"){
+	elseif($ext == "jpg" or $ext=="jpeg"){
     		echo "JPG";
 		//generate id
 		
