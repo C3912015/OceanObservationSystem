@@ -24,8 +24,9 @@ session_start();?>
           // if it does, remove it
           if($sensor_ID != NULL){
              $sqlSensorExist = "select * from sensors 
-				where sensor_id = {$sensor_ID}";
+				where sensor_id = :id";
              $sensorExist = oci_parse($conn, $sqlSensorExist);
+	     oci_bind_by_name($sensorExist,":id",$sensor_ID);
              $sExistRes = oci_execute($sensorExist);
 
              while (($row = oci_fetch_array($sensorExist, OCI_ASSOC)))
@@ -36,42 +37,48 @@ session_start();?>
              if($count > 0){
 		//remove from subscriptions
                 $sqlDELsub = "DELETE FROM subscriptions 
-			WHERE sensor_id={$sensor_ID}";
+			WHERE sensor_id=:id";
                 $rmSensor = oci_parse($conn, $sqlDELsub);
+		oci_bind_by_name($rmSensor, ":id",$sensor_ID);
 		if($res = oci_execute($rmSensor)){
 		}else{ //do nothing
 		}
 		
 		// remove from audio_recordings
 		$sqlDELaudio = "DELETE FROM audio_recordings 
-			WHERE sensor_id={$sensor_ID}";
+			WHERE sensor_id=:id";
                 $rmSensor = oci_parse($conn, $sqlDELaudio);
-		if($res = oci_execute($rmSensor)){
+		oci_bind_by_name($rmSensor, ":id",$sensor_ID);
+		if($res = oci_execute($rmSensor,OCI_DEFAULT)){
 		}else{ //do nothing
 		}
 		
 
 		// remove from images
 		$sqlDELimages = "DELETE FROM images 
-			WHERE sensor_id={$sensor_ID}";
+			WHERE sensor_id=:id";
                 $rmSensor = oci_parse($conn, $sqlDELimages);
-		if($res = oci_execute($rmSensor)){
+		oci_bind_by_name($rmSensor, ":id",$sensor_ID);
+		if($res = oci_execute($rmSensor,OCI_DEFAULT)){
 		}else{ //do nothing
 		}
 
 		// remove from scalar_data
 		$sqlDELscalar = "DELETE FROM scalar_data 
-			WHERE sensor_id={$sensor_ID}";
+			WHERE sensor_id=:id";
                 $rmSensor = oci_parse($conn, $sqlDELscalar);
-		if($res = oci_execute($rmSensor)){
+		oci_bind_by_name($rmSensor, ":id",$sensor_ID);
+		if($res = oci_execute($rmSensor, OCI_DEFAULT)){
 		}else{ //do nothing
 		}
 
 		// remove from sensors		
                 $sqlDEL = "DELETE FROM sensors 
-			WHERE sensor_id={$sensor_ID}";
+			WHERE sensor_id=:id";
                 $rmSensor = oci_parse($conn, $sqlDEL);
-                $res = oci_execute($rmSensor);
+		oci_bind_by_name($rmSensor, ":id",$sensor_ID);
+                $res = oci_execute($rmSensor,OCI_DEFAULT);
+		oci_commit($conn);
                 echo 'Sensor removed';
              //sensor doesn't exist
              }else{echo "Unable to remove nonexistant sensor.";}
@@ -94,10 +101,16 @@ session_start();?>
          $sensorType = $_POST['sType'];
          $sensorDesc = $_POST['sDesc'];
 
-         $sqlADD = "INSERT INTO sensors VALUES ({$sensor_ID},
-         '{$location}', '{$sensorType}', '{$sensorDesc}')";
+         $sqlADD = "INSERT INTO sensors VALUES (:id,
+         :location, :type, :sdesc)";
          echo $sqlADD;
          $addSensor = oci_parse($conn, $sqlADD);
+
+	 oci_bind_by_name($addSensor, ":id",$sensor_ID);
+	 oci_bind_by_name($addSensor, ":location", $location);
+	 oci_bind_by_name($addSensor, ":type",$sensorType);
+	 oci_bind_by_name($addSensor, ":sdesc",$sensorDesc);
+
          $res = oci_execute($addSensor);
        }
        echo
